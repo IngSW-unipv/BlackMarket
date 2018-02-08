@@ -13,7 +13,6 @@ public class Market {
     public static final int VALUE_FOR_BUYER = 14;
     public static final int VALUE_FOR_SELLER = 10;
     private final static Logger LOGGER = Logger.getLogger(Market.class.getName());
-
     private List<Dealer> dealers = new ArrayList<>();
 
     public void populateMarket() throws InstantiationException, IllegalAccessException {
@@ -46,28 +45,24 @@ public class Market {
         return String.format("%21s/%-21s %s %4d/%-4d", dealer1.getName(), dealer2.getName(), historyStr.toString(), reward1, reward2);
     }
 
+    private int computeReward(Briefcase dealerCase, Briefcase otherCase) {
+        int loss = (dealerCase == Briefcase.FULL ? VALUE_FOR_SELLER : 0);
+        int gain = (otherCase == Briefcase.FULL ? VALUE_FOR_BUYER : 0);
+        return gain - loss;
+    }
+
     private void exchange(Dealer firstDealer, Dealer secondDealer, int rounds) {
         int firstReward = 0;
         int secondReward = 0;
         List<Briefcase> firstHistory = new ArrayList<>();
         List<Briefcase> secondHistory = new ArrayList<>();
         for (int round = 0; round < rounds; round++) {
-            Briefcase firstBriefcase = firstDealer.exchangeBriefcase(secondHistory, rounds);
-            Briefcase secondBriefcase = secondDealer.exchangeBriefcase(firstHistory, rounds);
-
-            if (firstBriefcase == Briefcase.FULL && secondBriefcase == Briefcase.FULL) {
-                firstReward += VALUE_FOR_BUYER - VALUE_FOR_SELLER;
-                secondReward += VALUE_FOR_BUYER - VALUE_FOR_SELLER;
-            } else if (firstBriefcase == Briefcase.FULL && secondBriefcase == Briefcase.EMPTY) {
-                firstReward -= VALUE_FOR_SELLER;
-                secondReward += VALUE_FOR_BUYER;
-            } else if (firstBriefcase == Briefcase.EMPTY && secondBriefcase == Briefcase.FULL) {
-                firstReward += VALUE_FOR_BUYER;
-                secondReward -= VALUE_FOR_SELLER;
-            }
-
-            firstHistory.add(firstBriefcase);
-            secondHistory.add(secondBriefcase);
+            Briefcase firstCase = firstDealer.exchangeBriefcase(secondHistory, rounds);
+            Briefcase secondCase = secondDealer.exchangeBriefcase(firstHistory, rounds);
+            firstReward += computeReward(firstCase, secondCase);
+            secondReward += computeReward(secondCase, firstCase);
+            firstHistory.add(firstCase);
+            secondHistory.add(secondCase);
         }
         firstDealer.addToBalance(firstReward);
         secondDealer.addToBalance(secondReward);
