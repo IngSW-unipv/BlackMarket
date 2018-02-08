@@ -1,45 +1,76 @@
 package it.unipv.ingsw;
 
+import org.reflections.Reflections;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
 public class Market {
-    public static final int VALUE_FOR_BUYER = 13;
+    public static final int VALUE_FOR_BUYER = 14;
     public static final int VALUE_FOR_SELLER = 10;
+    private final static Logger LOGGER = Logger.getLogger(Market.class.getName());
 
     private List<Dealer> dealers = new ArrayList<>();
 
-    public void populateMarket() {
+    public void populateMarket() throws InstantiationException, IllegalAccessException {
         dealers = new ArrayList<>();
-        dealers.add(new HonestTrader());
-        dealers.add(new HonestTrader());
-        dealers.add(new Cheater());
-        if (dealers.size() % 2 == 1)
-            dealers.add(new CoinFlipDealer());
+
+        // Search all the descendants of the Dealer base class.
+        Reflections reflections = new Reflections("it.unipv.ingsw");
+        Set<Class<? extends Dealer>> subTypes;
+        subTypes = reflections.getSubTypesOf(Dealer.class);
+
+        // Add all descendants of Dealer except 'CoinFlipDealer' if they are in an odd number.
+        for (Class<? extends Dealer> cls : subTypes)
+            if (subTypes.size() % 2 == 0 || cls.getName() != CoinFlipDealer.class.getName())
+                dealers.add(cls.newInstance());
+
+        LOGGER.info(dealers.size() + " dealers created");
+    }
+
+    private String makeExchangeSummary(Dealer dealer1, List<Briefcase> history1, int reward1,
+                                       Dealer dealer2, List<Briefcase> history2, int reward2) {
+        StringBuilder historyStr = new StringBuilder();
+        for (int i =0; i < history1.size() && i < history2.size(); i++) {
+            if (i > 0)
+                historyStr.append("  ");
+            historyStr.append(history1.get(i) == Briefcase.FULL ? '$' : '.');
+            historyStr.append("");
+            historyStr.append(history2.get(i) == Briefcase.FULL ? '$' : '.');
+        }
+
+        return String.format("%21s/%-21s %s %4d/%-4d", dealer1.getName(), dealer2.getName(), historyStr.toString(), reward1, reward2);
     }
 
     private void exchange(Dealer firstDealer, Dealer secondDealer, int rounds) {
-        List<Suitcase> firstHistory = new ArrayList<>();
-        List<Suitcase> secondHistory = new ArrayList<>();
+        int firstReward = 0;
+        int secondReward = 0;
+        List<Briefcase> firstHistory = new ArrayList<>();
+        List<Briefcase> secondHistory = new ArrayList<>();
         for (int round = 0; round < rounds; round++) {
-            Suitcase firstSuitcase = firstDealer.exchangeSuitcase(secondHistory, rounds);
-            Suitcase secondSuitcase = secondDealer.exchangeSuitcase(firstHistory, rounds);
+            Briefcase firstBriefcase = firstDealer.exchangeBriefcase(secondHistory, rounds);
+            Briefcase secondBriefcase = secondDealer.exchangeBriefcase(firstHistory, rounds);
 
-            if (firstSuitcase == Suitcase.FULL && secondSuitcase == Suitcase.FULL) {
-                firstDealer.addToBalance(VALUE_FOR_BUYER - VALUE_FOR_SELLER);
-                secondDealer.addToBalance(VALUE_FOR_BUYER - VALUE_FOR_SELLER);
-            } else if (firstSuitcase == Suitcase.FULL && secondSuitcase == Suitcase.EMPTY) {
-                firstDealer.addToBalance(-VALUE_FOR_SELLER);
-                secondDealer.addToBalance(VALUE_FOR_BUYER);
-            } else if (firstSuitcase == Suitcase.EMPTY && secondSuitcase == Suitcase.FULL) {
-                firstDealer.addToBalance(VALUE_FOR_BUYER);
-                secondDealer.addToBalance(-VALUE_FOR_SELLER);
+            if (firstBriefcase == Briefcase.FULL && secondBriefcase == Briefcase.FULL) {
+                firstReward += VALUE_FOR_BUYER - VALUE_FOR_SELLER;
+                secondReward += VALUE_FOR_BUYER - VALUE_FOR_SELLER;
+            } else if (firstBriefcase == Briefcase.FULL && secondBriefcase == Briefcase.EMPTY) {
+                firstReward -= VALUE_FOR_SELLER;
+                secondReward += VALUE_FOR_BUYER;
+            } else if (firstBriefcase == Briefcase.EMPTY && secondBriefcase == Briefcase.FULL) {
+                firstReward += VALUE_FOR_BUYER;
+                secondReward -= VALUE_FOR_SELLER;
             }
 
-            firstHistory.add(secondSuitcase);
-            secondHistory.add(firstSuitcase);
+            firstHistory.add(firstBriefcase);
+            secondHistory.add(secondBriefcase);
         }
+        firstDealer.addToBalance(firstReward);
+        secondDealer.addToBalance(secondReward);
+        LOGGER.info(makeExchangeSummary(firstDealer, firstHistory, firstReward, secondDealer, secondHistory, secondReward));
     }
 
     private void simulateDay(int rounds) {
@@ -49,8 +80,10 @@ public class Market {
     }
 
     public void simulateSeason(int days, int roundsPerDay) {
-        for (int day = 0; day < days; day++)
+        for (int day = 0; day < days; day++) {
+            LOGGER.info("Day " + (day + 1) + " of " + days);
             simulateDay(roundsPerDay);
+        }
     }
 
     public void sortDealers() {

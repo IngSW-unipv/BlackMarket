@@ -17,5 +17,5 @@ public abstract class Dealer {
         balance += amount;
     }
 
-    abstract public Suitcase exchangeSuitcase(List<Suitcase> history, int rounds);
+    abstract public Briefcase exchangeBriefcase(List<Briefcase> history, int rounds);
 }

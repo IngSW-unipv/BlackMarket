@@ -1,6 +1,6 @@
 package it.unipv.ingsw;
 
-public enum Suitcase {
+public enum Briefcase {
     EMPTY,
     FULL
 }
