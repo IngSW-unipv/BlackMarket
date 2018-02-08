@@ -1,4 +1,4 @@
-package it.unipv.ingsw;
+package it.unipv.ingsw.blackmarket;
 
 import org.reflections.Reflections;
 
@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
+import it.unipv.ingsw.blackmarket.dealers.CoinFlipDealer;
 
 public class Market {
     public static final int VALUE_FOR_BUYER = 14;
@@ -25,7 +26,7 @@ public class Market {
 
         // Add all descendants of Dealer except 'CoinFlipDealer' if they are in an odd number.
         for (Class<? extends Dealer> cls : subTypes)
-            if (subTypes.size() % 2 == 0 || cls.getName() != CoinFlipDealer.class.getName())
+            if (subTypes.size() % 2 == 0 || !cls.getName().equals(CoinFlipDealer.class.getName()))
                 dealers.add(cls.newInstance());
 
         LOGGER.info(dealers.size() + " dealers created");

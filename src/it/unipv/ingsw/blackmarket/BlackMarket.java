@@ -1,10 +1,8 @@
-package it.unipv.ingsw;
+package it.unipv.ingsw.blackmarket;
 
 import java.util.List;
 
 // TODO: command line options
-// TODO: introspection in populateMarket
-// TODO: logging the individual rounds
 // TODO: javadoc
 
 public class BlackMarket {
@@ -23,9 +21,7 @@ public class BlackMarket {
         try {
             for (int i = 0; i < 10; i++)
             market.populateMarket();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
 

@@ -1,4 +1,4 @@
-package it.unipv.ingsw;
+package it.unipv.ingsw.blackmarket;
 
 public enum Briefcase {
     EMPTY,
