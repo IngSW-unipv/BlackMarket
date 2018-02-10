@@ -4,8 +4,6 @@ import java.util.List;
 
 // TODO: command line options
 // TODO: javadoc
-// TODO: change the exchange API (action + report, without history lists)
-
 
 /**
  * Application that runs the code.

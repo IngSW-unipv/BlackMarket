@@ -16,10 +16,6 @@ import it.unipv.ingsw.blackmarket.dealers.CoinFlipDealer;
  * It keeps a list of dealers, organizes the trading days etc.
  */
 public class Market {
-    /** Value obtained when buying a case of goods. */
-    public static final int VALUE_FOR_BUYER = 14;
-    /** Value lost when selling a case of goods. */
-    public static final int VALUE_FOR_SELLER = 10;
     /** The logger for this class. */
     private final static Logger LOGGER = Logger.getLogger(Market.class.getName());
     /** The list of dealers in the market. */
@@ -50,29 +46,37 @@ public class Market {
     /**
      * Create a string representing as text the outcome of an exchange.
      */
-    private String makeExchangeSummary(Dealer dealer1, List<Briefcase> history1, int reward1,
-                                       Dealer dealer2, List<Briefcase> history2, int reward2) {
+    private String makeExchangeSummary(Dealer dealer1, Dealer dealer2, Exchange exchanges[]) {
         StringBuilder historyStr = new StringBuilder();
-        for (int i =0; i < history1.size() && i < history2.size(); i++) {
-            if (i > 0)
-                historyStr.append("  ");
-            historyStr.append(history1.get(i) == Briefcase.FULL ? '$' : '.');
+        int reward1 = 0;
+        int reward2 = 0;
+        for (Exchange e : exchanges) {
+            historyStr.append("  ");
+            historyStr.append(e.firstBriefcase() == Briefcase.FULL ? '$' : '.');
             historyStr.append("");
-            historyStr.append(history2.get(i) == Briefcase.FULL ? '$' : '.');
+            historyStr.append(e.secondBriefcase() == Briefcase.FULL ? '$' : '.');
+            reward1 += e.firstReward();
+            reward2 += e.secondReward();
         }
-
         return String.format("%21s/%-21s %s %4d/%-4d", dealer1.getName(), dealer2.getName(), historyStr.toString(), reward1, reward2);
     }
 
     /**
-     * Compute the gain for a dealer when it trades a briefcase with another.
-     * @param dealerCase the case traded by the dealer
-     * @param otherCase  the case traded by its business partner
+     * Perform a briefcase exchange between two dealers.
+     * @param firstDealer first dealer participating to the trading
+     * @param secondDealer second dealer participating to the trading
+     * @param roundNo number that identify the current exchange starting from 1
+     * @param rounds number of exchanges in the sequence
      */
-    private int computeReward(Briefcase dealerCase, Briefcase otherCase) {
-        int loss = (dealerCase == Briefcase.FULL ? VALUE_FOR_SELLER : 0);
-        int gain = (otherCase == Briefcase.FULL ? VALUE_FOR_BUYER : 0);
-        return gain - loss;
+    private Exchange makeExchange(Dealer firstDealer, Dealer secondDealer, int roundNo, int rounds) {
+        Briefcase firstCase = firstDealer.exchangeBriefcase(roundNo, rounds);
+        Briefcase secondCase = secondDealer.exchangeBriefcase(roundNo, rounds);
+        Exchange exchange = new Exchange(firstCase, secondCase);
+        firstDealer.exchangeResult(exchange, roundNo, rounds);
+        secondDealer.exchangeResult(exchange.reverse(), roundNo, rounds);
+        firstDealer.addToBalance(exchange.firstReward());
+        secondDealer.addToBalance(exchange.secondReward());
+        return exchange;
     }
 
     /**
@@ -81,22 +85,11 @@ public class Market {
      * @param secondDealer second dealer participating to the trading
      * @param rounds number of exchanges
      */
-    private void exchange(Dealer firstDealer, Dealer secondDealer, int rounds) {
-        int firstReward = 0;
-        int secondReward = 0;
-        List<Briefcase> firstHistory = new ArrayList<>();
-        List<Briefcase> secondHistory = new ArrayList<>();
-        for (int round = 0; round < rounds; round++) {
-            Briefcase firstCase = firstDealer.exchangeBriefcase(secondHistory, rounds);
-            Briefcase secondCase = secondDealer.exchangeBriefcase(firstHistory, rounds);
-            firstReward += computeReward(firstCase, secondCase);
-            secondReward += computeReward(secondCase, firstCase);
-            firstHistory.add(firstCase);
-            secondHistory.add(secondCase);
-        }
-        firstDealer.addToBalance(firstReward);
-        secondDealer.addToBalance(secondReward);
-        LOGGER.info(makeExchangeSummary(firstDealer, firstHistory, firstReward, secondDealer, secondHistory, secondReward));
+    private void exchangeRounds(Dealer firstDealer, Dealer secondDealer, int rounds) {
+        Exchange exchanges[] = new Exchange[rounds];
+        for (int round = 0; round < rounds; round++)
+            exchanges[round] = makeExchange(firstDealer, secondDealer, round + 1, rounds);
+        LOGGER.info(makeExchangeSummary(firstDealer, secondDealer, exchanges));
     }
 
     /**
@@ -107,7 +100,7 @@ public class Market {
         // Dealers are paired by taking consecutive elements in the list after it has been randomly shuffled.
         Collections.shuffle(dealers);
         for (int i = 0; i < dealers.size() - 1; i += 2)
-            exchange(dealers.get(i), dealers.get(i + 1), rounds);
+            exchangeRounds(dealers.get(i), dealers.get(i + 1), rounds);
     }
 
     /**
