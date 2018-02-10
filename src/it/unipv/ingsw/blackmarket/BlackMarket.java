@@ -2,13 +2,13 @@ package it.unipv.ingsw.blackmarket;
 
 import java.util.List;
 
-// TODO: command line options
-// TODO: javadoc
-
 /**
  * Application that runs the code.
  */
 public class BlackMarket {
+
+    private static final int DEFAULT_DAYS = 7;
+    private static final int DEFAULT_ROUNDS = 10;
 
     /**
      * Print the final ranking to stdout.
@@ -36,8 +36,8 @@ public class BlackMarket {
         }
 
         // Run the simulation.
-        int days = 7;
-        int roundsPerDay = 10;
+        int days = (args.length > 0 ? Integer.parseInt(args[0]) : DEFAULT_DAYS);
+        int roundsPerDay = (args.length > 1 ? Integer.parseInt(args[1]) : DEFAULT_ROUNDS);
         market.simulateSeason(days, roundsPerDay);
 
         // Sort the dealers and print their scores.
