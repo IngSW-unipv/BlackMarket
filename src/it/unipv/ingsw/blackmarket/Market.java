@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.logging.Logger;
 import it.unipv.ingsw.blackmarket.dealers.CoinFlipDealer;
 
+import static java.lang.Integer.max;
+
 
 /**
  * Class representing the market.
@@ -62,6 +64,22 @@ public class Market {
     }
 
     /**
+     * Prevent dealers from cheating by changing their own balance.
+     *
+     * Cheaters get a fine.
+     * @param dealer the dealer
+     * @param expected the expected balance
+     */
+    private void checkBalance(Dealer dealer, int expected) {
+        int balance = dealer.getBalance();
+        if (balance != expected) {
+            LOGGER.warning(dealer.getName() + " is cheating!");
+            int fine = max(3 * (balance - expected), 50);
+            dealer.addToBalance(-fine);
+        }
+    }
+
+    /**
      * Perform a briefcase exchange between two dealers.
      * @param firstDealer first dealer participating to the trading
      * @param secondDealer second dealer participating to the trading
@@ -69,6 +87,8 @@ public class Market {
      * @param rounds number of exchanges in the sequence
      */
     private Exchange makeExchange(Dealer firstDealer, Dealer secondDealer, int roundNo, int rounds) {
+        int firstBalance = firstDealer.getBalance();
+        int secondBalance = secondDealer.getBalance();
         Briefcase firstCase = firstDealer.exchangeBriefcase(roundNo, rounds);
         Briefcase secondCase = secondDealer.exchangeBriefcase(roundNo, rounds);
         Exchange exchange = new Exchange(firstCase, secondCase);
@@ -76,6 +96,8 @@ public class Market {
         secondDealer.exchangeResult(exchange.reverse(), roundNo, rounds);
         firstDealer.addToBalance(exchange.firstReward());
         secondDealer.addToBalance(exchange.secondReward());
+        checkBalance(firstDealer, firstBalance + exchange.firstReward());
+        checkBalance(secondDealer, secondBalance + exchange.secondReward());
         return exchange;
     }
 
