@@ -71,11 +71,11 @@ public class Market {
      * @param expected the expected balance
      */
     private void checkBalance(Dealer dealer, int expected) {
-        int balance = dealer.getBalance();
+        int balance = dealer.getCoins();
         if (balance != expected) {
             LOGGER.warning(dealer.getName() + " is cheating!");
             int fine = max(3 * (balance - expected), 50);
-            dealer.addToBalance(-fine);
+            dealer.addCoins(-fine);
         }
     }
 
@@ -87,15 +87,15 @@ public class Market {
      * @param rounds number of exchanges in the sequence
      */
     private Exchange makeExchange(Dealer firstDealer, Dealer secondDealer, int roundNo, int rounds) {
-        int firstBalance = firstDealer.getBalance();
-        int secondBalance = secondDealer.getBalance();
+        int firstBalance = firstDealer.getCoins();
+        int secondBalance = secondDealer.getCoins();
         Briefcase firstCase = firstDealer.exchangeBriefcase(roundNo, rounds);
         Briefcase secondCase = secondDealer.exchangeBriefcase(roundNo, rounds);
         Exchange exchange = new Exchange(firstCase, secondCase);
         firstDealer.exchangeResult(exchange, roundNo, rounds);
         secondDealer.exchangeResult(exchange.reverse(), roundNo, rounds);
-        firstDealer.addToBalance(exchange.firstReward());
-        secondDealer.addToBalance(exchange.secondReward());
+        firstDealer.addCoins(exchange.firstReward());
+        secondDealer.addCoins(exchange.secondReward());
         checkBalance(firstDealer, firstBalance + exchange.firstReward());
         checkBalance(secondDealer, secondBalance + exchange.secondReward());
         return exchange;
@@ -141,7 +141,7 @@ public class Market {
      * Sort the list of dealers by decreasing profit.
      */
     public void sortDealers() {
-        dealers.sort((dealer1, dealer2) -> (dealer2.getBalance() - dealer1.getBalance()));
+        dealers.sort((dealer1, dealer2) -> (dealer2.getCoins() - dealer1.getCoins()));
     }
 
     /**

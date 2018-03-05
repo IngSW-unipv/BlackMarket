@@ -6,7 +6,7 @@ package it.unipv.ingsw.blackmarket;
  */
 public abstract class Dealer {
     /// Money made so far.
-    private int balance = 0;
+    private int coins = 0;
 
     /**
      * Get the name of the Dealer.
@@ -19,15 +19,15 @@ public abstract class Dealer {
     /**
      * Return the profit made by this dealer in its trading activities.
      */
-    public final int getBalance() {
-        return balance;
+    public final int getCoins() {
+        return coins;
     }
 
     /**
      * Add some money to the profit of the dealer.
      */
-    public final void addToBalance(int amount) {
-        balance += amount;
+    public final void addCoins(int amount) {
+        coins += amount;
     }
 
     /**
