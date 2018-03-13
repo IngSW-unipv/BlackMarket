@@ -8,7 +8,9 @@ public class MaxRapetti extends Dealer {
     Briefcase case_;
 
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-       
+        if (roundNo == 1) {
+            return Briefcase.FULL;
+        }
         return Briefcase.EMPTY;
     }
 
