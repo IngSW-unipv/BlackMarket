@@ -7,9 +7,11 @@ public class Curcio extends Dealer {
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
+
         if (roundNo == 1) {
             return (Briefcase.FULL);
         } else
             return Briefcase.EMPTY;
     }
+
 }
