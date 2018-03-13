@@ -20,6 +20,5 @@ public class RegnaCristian extends Dealer {
             return Briefcase.FULL;
         else
             return Briefcase.EMPTY;
-
     }
 }
