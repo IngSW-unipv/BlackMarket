@@ -21,10 +21,6 @@ public class WizardDealer extends Dealer {
             t.start(); // Start the thread
         }
 
-        public Thread getT() {
-            return t;
-        }
-
         // This is the entry point for the second thread
         public void run() {
             try {
