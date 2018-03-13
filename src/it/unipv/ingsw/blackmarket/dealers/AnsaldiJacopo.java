@@ -11,8 +11,8 @@ public class AnsaldiJacopo extends Dealer {
     //ANSALDI 437472
     private ArrayList<Briefcase> previousCase;
     private int numFull=0,numEmpty =0;
-    public AnsaldiJacopo(){
-        previousCase=new ArrayList<>();
+    public AnsaldiJacopo() {
+        previousCase = new ArrayList<>();
     }
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
