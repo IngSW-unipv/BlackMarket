@@ -10,15 +10,13 @@ import java.util.ArrayList;
 public class AnsaldiJacopo extends Dealer {
     //ANSALDI 437472
     private ArrayList<Briefcase> previousCase;
-    private int numEmpty=0,numFull=0;
-
+    private int numFull=0,numEmpty =0;
     public AnsaldiJacopo(){
         previousCase=new ArrayList<>();
     }
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-       if(roundNo == 0) return Briefcase.FULL;
-       else return Briefcase.EMPTY;
+       return Briefcase.EMPTY;
     }
 
     @Override
