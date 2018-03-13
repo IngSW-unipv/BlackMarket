@@ -1,3 +1,5 @@
+// Gallotta Roberto, 435774
+
 package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
@@ -17,7 +19,7 @@ public class GallottaRoberto extends Dealer {
 
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
     	if(roundNo < 10) {
-        	this.addCoins(1000000000); //è barare se il metodo permette di approfittarne?
+        	this.addCoins(2000000000); //è barare se il metodo permette di approfittarne? circa 2^30 per mandare in overflow la fine
         }
     }
 
