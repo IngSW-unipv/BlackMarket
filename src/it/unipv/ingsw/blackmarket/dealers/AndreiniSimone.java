@@ -4,11 +4,12 @@ package it.unipv.ingsw.blackmarket.dealers;
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
-
 import java.util.Random;
 
 public class AndreiniSimone extends Dealer{
     private Briefcase case_;
+    private int numFull=0,numEmpty=0;
+
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
         Briefcase borsa;
@@ -20,12 +21,9 @@ public class AndreiniSimone extends Dealer{
 
     private Briefcase scelta(int roundNo) {
         Random randomGenerator = new Random();
-        if (roundNo==1){
-            return Briefcase.FULL;
-        }
 
-        if (roundNo%3==0){
-            if (case_==Briefcase.FULL && getCoins()<150) {
+        if (numFull>numEmpty){
+            if (case_==Briefcase.FULL && getCoins()<200) {
                 return (randomGenerator.nextBoolean() ? Briefcase.EMPTY : Briefcase.FULL);
             }
             else {
@@ -35,11 +33,18 @@ public class AndreiniSimone extends Dealer{
         else {
             return Briefcase.EMPTY;
         }
-
     }
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         case_ = exchange.secondBriefcase();
+        if (exchange.secondBriefcase().equals(Briefcase.FULL)){
+            numFull++;
+        }
+        else {
+            numEmpty++;
+        }
     }
+
+
 }
