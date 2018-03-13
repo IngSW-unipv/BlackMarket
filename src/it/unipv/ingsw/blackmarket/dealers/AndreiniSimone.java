@@ -20,8 +20,12 @@ public class AndreiniSimone extends Dealer{
 
     private Briefcase scelta(int roundNo) {
         Random randomGenerator = new Random();
+        if (roundNo==1){
+            return Briefcase.FULL;
+        }
+
         if (roundNo%3==0){
-            if (case_==Briefcase.FULL) {
+            if (case_==Briefcase.FULL && getCoins()<150) {
                 return (randomGenerator.nextBoolean() ? Briefcase.EMPTY : Briefcase.FULL);
             }
             else {
@@ -31,6 +35,7 @@ public class AndreiniSimone extends Dealer{
         else {
             return Briefcase.EMPTY;
         }
+
     }
 
     @Override
