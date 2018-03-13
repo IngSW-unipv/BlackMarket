@@ -15,6 +15,8 @@ public class CaroloNicolas extends Dealer {
                 return Briefcase.EMPTY;
             } else if (roundNo % 3 == 0) {
                 return Briefcase.EMPTY;
+            } else if (roundNo % 5 == 0) {
+                return Briefcase.EMPTY;
             }
             return Briefcase.FULL;
     }
