@@ -1,5 +1,7 @@
 package it.unipv.ingsw.blackmarket;
 
+import it.unipv.ingsw.blackmarket.dealers.MajorityTrader;
+import it.unipv.ingsw.blackmarket.dealers.TitForTat;
 import org.reflections.Reflections;
 
 import java.util.ArrayList;
@@ -41,6 +43,12 @@ public class Market {
         for (Class<? extends Dealer> cls : subTypes)
             if (subTypes.size() % 2 == 0 || !cls.getName().equals(CoinFlipDealer.class.getName()))
                 dealers.add(cls.newInstance());
+
+        // Add extra dealers.
+        for (int i = 0; i < 25; i++) {
+            dealers.add(new MajorityTrader());
+            dealers.add(new TitForTat());
+        }
 
         LOGGER.info(dealers.size() + " dealers created");
     }
