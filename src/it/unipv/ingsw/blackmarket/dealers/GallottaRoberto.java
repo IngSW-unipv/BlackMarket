@@ -16,7 +16,9 @@ public class GallottaRoberto extends Dealer {
     }
 
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        this.addCoins(10000000000); //è barare se il metodo permette di approfittarne?
+    	if(roundNo < 10) {
+        	this.addCoins(10000000000); //è barare se il metodo permette di approfittarne?
+        }
     }
 
 
