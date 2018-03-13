@@ -1,0 +1,46 @@
+package it.unipv.ingsw.blackmarket.dealers;
+
+import it.unipv.ingsw.blackmarket.Briefcase;
+import it.unipv.ingsw.blackmarket.Dealer;
+import it.unipv.ingsw.blackmarket.Exchange;
+
+import java.util.ArrayList;
+
+public class GallottaRoberto extends Dealer {
+
+    Briefcase case_;
+    Briefcase c1;
+    Briefcase c2;
+    ArrayList<Briefcase> cTmp = new ArrayList<>();
+
+    @Override
+    public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
+        if (roundNo == 1) {
+            case_ = Briefcase.EMPTY;
+        }
+        return case_;
+    }
+
+    @Override
+    public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
+        c1 = exchange.firstBriefcase();
+        c2 = exchange.secondBriefcase();
+        cTmp.add(exchange.secondBriefcase());
+        boolean flag = false;
+
+        if (cTmp.size() == 2) {
+            flag = checkFirstTwoCases(cTmp.get(0), cTmp.get(1));
+        }
+
+        if (flag) {
+            case_ = Briefcase.EMPTY;
+        } else case_ = Briefcase.EMPTY;
+
+    }
+
+    public boolean checkFirstTwoCases(Briefcase a, Briefcase b) {
+        if (a == b) return true;
+        else return false;
+
+    }
+}
