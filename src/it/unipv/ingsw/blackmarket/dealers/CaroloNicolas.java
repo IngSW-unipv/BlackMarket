@@ -11,11 +11,14 @@ import it.unipv.ingsw.blackmarket.Dealer;
 public class CaroloNicolas extends Dealer {
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        if (roundNo % 2 == 0) {
-            return Briefcase.EMPTY;
+        if (roundNo == 1){
+            return Briefcase.FULL;
         } else {
-            return Briefcase.EMPTY;
+            if (roundNo % 2 == 0) {
+                return Briefcase.FULL;
+            } else {
+                return Briefcase.EMPTY;
+            }
         }
-
     }
 }
