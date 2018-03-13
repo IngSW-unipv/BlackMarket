@@ -50,6 +50,10 @@ public class Market {
             dealers.add(new TitForTat());
         }
 
+        // Verify the initial balance of the dealers.
+        for (Dealer d : dealers)
+            checkBalance(d, 0);
+
         LOGGER.info(dealers.size() + " dealers created");
     }
 
