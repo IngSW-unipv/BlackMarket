@@ -1,7 +1,4 @@
-/*
-    Carolo Nicolas  436266
-    Modica Camilla  439006
- */
+//Carolo Nicolas  436266
 package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
