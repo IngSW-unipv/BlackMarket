@@ -14,9 +14,4 @@ public class AnsaldiJacopo extends Dealer {
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
         return Briefcase.EMPTY;
     }
-
-    @Override
-    public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-
-    }
 }
