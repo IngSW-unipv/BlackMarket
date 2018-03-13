@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class AndreiniSimone extends Dealer{
     private Briefcase case_;
-    private int numFull=0,numEmpty=0;
+    private int nFull=0,nEmpty=0;
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
@@ -21,7 +21,7 @@ public class AndreiniSimone extends Dealer{
     private Briefcase scelta(int roundNo) {
         Random randomGenerator = new Random();
 
-        if (numFull>=numEmpty){
+        if (nFull>=nEmpty){
             if (case_==Briefcase.FULL && getCoins()<150) {
                 return (randomGenerator.nextBoolean() ? Briefcase.EMPTY : Briefcase.FULL);
             }
@@ -38,10 +38,10 @@ public class AndreiniSimone extends Dealer{
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         case_ = exchange.secondBriefcase();
         if (case_.equals(Briefcase.FULL)){
-            numFull++;
+            nFull++;
         }
         else {
-            numEmpty++;
+            nEmpty++;
         }
     }
 }
