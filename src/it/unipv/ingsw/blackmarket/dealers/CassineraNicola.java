@@ -4,8 +4,6 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-import java.util.Random;
-
 /**
  * Classe Dealer di
  * Cassinera Nicola (438836)
@@ -15,17 +13,11 @@ import java.util.Random;
  */
 
 public class CassineraNicola extends Dealer {
-        Random randomGenerator = new Random();
-        private int empty = 0;
         private int full = 0;
 
         @Override
         public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-            if(roundNo == 1)
-                return Briefcase.EMPTY;
-            else if(empty == roundNo - 1 && roundNo != 1)
-                return Briefcase.EMPTY;
-            else if(full == roundNo -1 && roundNo > 2)
+            if(full == roundNo -1 && roundNo > 2)
                 return Briefcase.FULL;
             else if(full == roundNo-1 && roundNo >= totRounds*(2/3))
                 return Briefcase.EMPTY;
@@ -35,13 +27,9 @@ public class CassineraNicola extends Dealer {
 
         @Override
         public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-            if(roundNo ==1) {
-                empty = 0;
+            if(roundNo ==1)
                 full = 0;
-            }
-            if (exchange.secondBriefcase() == Briefcase.EMPTY)
-                empty++;
-            else
+            if (exchange.secondBriefcase() == Briefcase.FULL)
                 full++;
         }
 
