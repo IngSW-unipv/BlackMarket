@@ -16,11 +16,15 @@ public class AnsaldiJacopo extends Dealer {
     }
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        return Briefcase.EMPTY;
+       return Briefcase.EMPTY;
     }
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-
+        previousCase.add(exchange.secondBriefcase());
+        for(int i=0;i<previousCase.size();i++){
+            if(previousCase.get(i).equals(Briefcase.FULL)) numFull ++;
+            if(previousCase.get(i).equals(Briefcase.EMPTY)) numEmpty++;
+        }
     }
 }
