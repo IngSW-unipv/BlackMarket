@@ -1,4 +1,5 @@
-//Goretti Matteo matricola: 438952
+//Goretti Matteo
+// matricola: 438952
 
 package it.unipv.ingsw.blackmarket.dealers;
 
@@ -9,6 +10,7 @@ import it.unipv.ingsw.blackmarket.Exchange;
 import java.util.Random;
 
 public class GorettiMatteo extends Dealer{
+
     private Briefcase briefcase;
     private double trust;
     private Random randomGenerator = new Random();
@@ -20,17 +22,22 @@ public class GorettiMatteo extends Dealer{
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
+        //addCoins(10);
+        return Briefcase.EMPTY;
+        /*
         if (roundNo == 1)
             return (randomGenerator.nextBoolean() ? Briefcase.FULL : Briefcase.EMPTY);
         else if(roundNo == totRounds)
             return Briefcase.EMPTY;
         else
             return briefcase;
+
+       //return Briefcase.EMPTY;
+       */
     }
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        //if(this.getName() == "GorettiMatteo") addCoins(200);
         Briefcase bag1 = exchange.firstBriefcase();
         Briefcase bag2 = exchange.secondBriefcase();
         if(bag2 == Briefcase.EMPTY){

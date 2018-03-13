@@ -23,8 +23,9 @@ public class ArazziMarco extends Dealer {
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        if(roundNo!=1){
+        if(case_==Briefcase.EMPTY){
             exchange.reverse();
+
         }
     }
 }
