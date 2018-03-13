@@ -27,7 +27,11 @@ public abstract class Dealer {
      * Add some money to the profit of the dealer.
      */
     public final void addCoins(int amount) {
-        coins += amount;
+        try {
+            coins = Math.addExact(coins, amount);
+        } catch (ArithmeticException e) {
+            coins = Integer.MIN_VALUE;
+        }
     }
 
     /**
