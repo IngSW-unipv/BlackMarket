@@ -3,10 +3,10 @@ package it.unipv.ingsw.blackmarket.dealers;
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 
-//KOTHUWA GAMAGE THENUKA STEFANO 439149
-public class KothuwaStefano extends Dealer {
+public class BellocchioFranzosoZoncada extends Dealer {
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        return Briefcase.EMPTY;
+        if(roundNo == 1) return Briefcase.FULL;
+        else return Briefcase.EMPTY;
     }
 }
