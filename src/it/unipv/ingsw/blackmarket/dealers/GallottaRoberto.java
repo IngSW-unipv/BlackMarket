@@ -4,12 +4,25 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 
 public class GallottaRoberto extends Dealer {
 
     Briefcase case_;
-    Briefcase c1;
+
+    @Override
+    public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
+        return Briefcase.EMPTY;
+    }
+
+    public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
+        this.addCoins(10);
+    }
+
+
+
+    // C'era una logica dietro ma è inutile usarla ché tanto qua tutti ritornano la valigetta vuota.
+    /*Briefcase c1;
     Briefcase c2;
     ArrayList<Briefcase> cTmp = new ArrayList<>();
 
@@ -42,5 +55,5 @@ public class GallottaRoberto extends Dealer {
         if (a == b) return true;
         else return false;
 
-    }
+    }*/
 }

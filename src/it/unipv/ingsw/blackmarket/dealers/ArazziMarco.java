@@ -4,22 +4,28 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-import java.text.BreakIterator;
-import java.util.ArrayList;
+public class ArazziMarco extends Dealer {
 
-public class AnsaldiJacopo extends Dealer {
-    //ANSALDI 437472
-    private ArrayList<Briefcase> previousCase;
-    public AnsaldiJacopo() {
-        previousCase = new ArrayList<>();
-    }
+    Briefcase case_;
+
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-       return Briefcase.EMPTY;
+        if(roundNo==1){
+            case_=Briefcase.FULL;
+        }
+
+        else{
+            case_=Briefcase.EMPTY;
+        }
+
+        return case_;
     }
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        previousCase.add(exchange.secondBriefcase());
+        if(case_==Briefcase.EMPTY){
+            exchange.reverse();
+
+        }
     }
 }
