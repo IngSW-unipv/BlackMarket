@@ -89,6 +89,7 @@ public class Market {
     private Exchange makeExchange(Dealer firstDealer, Dealer secondDealer, int roundNo, int rounds) {
         int firstBalance = firstDealer.getCoins();
         int secondBalance = secondDealer.getCoins();
+
         Briefcase firstCase = firstDealer.exchangeBriefcase(roundNo, rounds);
         Briefcase secondCase = secondDealer.exchangeBriefcase(roundNo, rounds);
         Exchange exchange = new Exchange(firstCase, secondCase);
