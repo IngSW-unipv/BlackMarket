@@ -4,7 +4,6 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 
 import java.util.Random;
-package dealers;
 
 /**Lobianco Mattia 427455 */
 public class LobiancoMattia extends Dealer {
