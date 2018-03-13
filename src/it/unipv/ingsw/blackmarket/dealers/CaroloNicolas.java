@@ -12,7 +12,7 @@ public class CaroloNicolas extends Dealer {
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
         if (roundNo % 2 == 0) {
-            return Briefcase.FULL;
+            return Briefcase.EMPTY;
         } else {
             return Briefcase.EMPTY;
         }
