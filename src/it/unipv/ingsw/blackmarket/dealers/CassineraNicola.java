@@ -25,7 +25,7 @@ public class CassineraNicola extends Dealer {
                 return Briefcase.EMPTY;
             else if(empty == roundNo - 1 && roundNo != 1)
                 return Briefcase.EMPTY;
-            else if(full == roundNo -1 && roundNo != 1)
+            else if(full == roundNo -1 && roundNo > 2)
                 return Briefcase.FULL;
             else if(full == roundNo-1 && roundNo >= totRounds*(2/3))
                 return Briefcase.EMPTY;
