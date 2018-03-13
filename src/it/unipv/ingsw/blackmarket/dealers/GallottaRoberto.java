@@ -3,7 +3,6 @@ package it.unipv.ingsw.blackmarket.dealers;
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
-import sun.font.TrueTypeFont;
 
 import java.util.ArrayList;
 
