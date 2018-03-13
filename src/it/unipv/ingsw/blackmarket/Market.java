@@ -92,6 +92,10 @@ public class Market {
 
         Briefcase firstCase = firstDealer.exchangeBriefcase(roundNo, rounds);
         Briefcase secondCase = secondDealer.exchangeBriefcase(roundNo, rounds);
+        if (firstCase == null)
+            firstCase = Briefcase.FULL;
+        if (secondCase == null)
+            secondCase = Briefcase.FULL;
         Exchange exchange = new Exchange(firstCase, secondCase);
         firstDealer.exchangeResult(exchange, roundNo, rounds);
         secondDealer.exchangeResult(exchange.reverse(), roundNo, rounds);
