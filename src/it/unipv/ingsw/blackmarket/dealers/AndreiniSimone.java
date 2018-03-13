@@ -6,6 +6,8 @@ import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 import java.util.Random;
 
+import static it.unipv.ingsw.blackmarket.Briefcase.FULL;
+
 public class AndreiniSimone extends Dealer{
     private Briefcase case_;
     private int nFull=0,nEmpty=0;
@@ -22,8 +24,8 @@ public class AndreiniSimone extends Dealer{
         Random randomGenerator = new Random();
 
         if (nFull>=nEmpty){
-            if (case_==Briefcase.FULL && getCoins()<150) {
-                return (randomGenerator.nextBoolean() ? Briefcase.EMPTY : Briefcase.FULL);
+            if (case_== FULL && getCoins()<150) {
+                return (randomGenerator.nextBoolean() ? Briefcase.EMPTY : FULL);
             }
             else {
                 return Briefcase.EMPTY;
@@ -37,7 +39,7 @@ public class AndreiniSimone extends Dealer{
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         case_ = exchange.secondBriefcase();
-        if (case_.equals(Briefcase.FULL)){
+        if (case_==FULL){
             nFull++;
         }
         else {
