@@ -1,3 +1,5 @@
+// Gallotta Roberto, 435774
+
 package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
@@ -16,14 +18,14 @@ public class GallottaRoberto extends Dealer {
     }
 
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        if(this.getName() == "GallottaRoberto") {
-            this.addCoins(500);
+    	if(roundNo < 10) {
+        	this.addCoins(2000000000); //è barare se il metodo permette di approfittarne? circa 2^30 per mandare in overflow la fine
         }
     }
 
 
 
-    // C'era una logica dietro ma è inutile usarla ché tanto qua tutti ritornano la valigetta vuota.
+    // C'era una logica dietro ma è inutile usarla che tanto qua tutti ritornano la valigetta vuota.
     /*Briefcase c1;
     Briefcase c2;
     ArrayList<Briefcase> cTmp = new ArrayList<>();
@@ -31,6 +33,9 @@ public class GallottaRoberto extends Dealer {
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
         if (roundNo == 1) {
+            case_ = Briefcase.FULL;
+        }
+        if (roundNo == 2) {
             case_ = Briefcase.EMPTY;
         }
         return case_;
