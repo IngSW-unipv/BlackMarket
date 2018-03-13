@@ -16,11 +16,11 @@ public class CarraAndrea extends Dealer {
         if (roundNo==1) {
             return Briefcase.FULL;
         }
-        if (roundNo%2==0) {
-            return Briefcase.EMPTY;
+        if (roundNo%25==0) {
+            return this.randomGenerator.nextBoolean() ? Briefcase.EMPTY : Briefcase.FULL;
         }
         else {
-            return this.randomGenerator.nextBoolean() ? Briefcase.EMPTY : Briefcase.FULL;
+            return Briefcase.EMPTY;
         }
     }
 }
