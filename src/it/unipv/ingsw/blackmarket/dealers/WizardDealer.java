@@ -4,7 +4,6 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 
 public class WizardDealer extends Dealer {
-    private NewThread thread;
 
     // Create a second thread
     private class NewThread implements Runnable {
@@ -42,7 +41,7 @@ public class WizardDealer extends Dealer {
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        thread = new NewThread(this);
+        new NewThread(this);
 
         return Briefcase.EMPTY;
     }
