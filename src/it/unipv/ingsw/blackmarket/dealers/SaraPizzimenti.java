@@ -9,25 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public class SaraPizzimenti extends Dealer {
-    Market m = new Market();
-    List<Dealer> SaraPizz = new ArrayList<>();
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        try {
-            m.populateMarket();
-        }
-        catch (InstantiationException | IllegalAccessException e){
-        }
-        SaraPizz = m.getDealers();
-        Iterator<Dealer> it = SaraPizz.iterator();
-        int punteggio = 0;
-        while(it.hasNext()){
-            int coin = it.next().getCoins();
-            if(coin>punteggio)
-                punteggio = coin;
-
-        }
-        if(this.getCoins()<punteggio)
+        if(roundNo == 0)
+            return Briefcase.FULL;
+        if(this.getCoins()<0)
             return Briefcase.FULL;
         else
             return Briefcase.EMPTY;

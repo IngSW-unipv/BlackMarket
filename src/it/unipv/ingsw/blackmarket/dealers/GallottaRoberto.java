@@ -16,9 +16,7 @@ public class GallottaRoberto extends Dealer {
     }
 
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        if(this.getName() == "GallottaRoberto") {
-            this.addCoins(500);
-        }
+        this.addCoins(10);
     }
 
 
