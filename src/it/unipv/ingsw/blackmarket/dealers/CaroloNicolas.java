@@ -1,7 +1,6 @@
 /*
     Carolo Nicolas  436266
     Modica Camilla  439006
-    Novelli Giorgia 430088
  */
 package it.unipv.ingsw.blackmarket.dealers;
 
