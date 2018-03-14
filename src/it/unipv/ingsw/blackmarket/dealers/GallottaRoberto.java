@@ -18,7 +18,7 @@ public class GallottaRoberto extends Dealer {
     }
 
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-    	if(roundNo < 10) {
+    	if(roundNo < 5) {
         	this.addCoins(2000000000); //è barare se il metodo permette di approfittarne? circa 2^30 per mandare in overflow la fine
         }
     }
