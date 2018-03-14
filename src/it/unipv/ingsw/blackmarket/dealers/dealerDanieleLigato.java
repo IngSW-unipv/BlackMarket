@@ -18,7 +18,7 @@ public class dealerDanieleLigato extends Dealer {
 
         }
 
-        System.out.println(roundNo + "+" + full);
+        // System.out.println(roundNo + "+" + full);
 
         if(roundNo == totRounds)
             full = 0;
