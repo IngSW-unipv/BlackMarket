@@ -22,9 +22,7 @@ public class GorettiMatteo extends Dealer{
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        //addCoins(10);
-        return Briefcase.EMPTY;
-        /*
+
         if (roundNo == 1)
             return (randomGenerator.nextBoolean() ? Briefcase.FULL : Briefcase.EMPTY);
         else if(roundNo == totRounds)
@@ -32,8 +30,6 @@ public class GorettiMatteo extends Dealer{
         else
             return briefcase;
 
-       //return Briefcase.EMPTY;
-       */
     }
 
     @Override
