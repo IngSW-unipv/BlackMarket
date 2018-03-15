@@ -16,7 +16,7 @@ public class BlackMarket {
     private static void printRanking(List<Dealer> dealers) {
         int rank = 0;
         for (Dealer d : dealers)
-            System.out.printf("%3d) %21s %+6d%n", ++rank, d.getName(), d.getCoins());
+            System.out.printf("%3d) %21s %+6d\n", ++rank, d.getName(), d.getCoins());
     }
 
     /**

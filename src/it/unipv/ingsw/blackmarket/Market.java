@@ -1,6 +1,15 @@
 package it.unipv.ingsw.blackmarket;
 
+/*
+ * ATTENZIONE:
+ *
+ * se viene rilevato un errore di importazione alla riga qui sotto bisogna includere la libreria corrispondente
+ * (basta selezionare con il tasto destro il file fast-classpath-scanner-2.8.1.jar nell'elenco a sinistra
+ * sotto "lib" e scegliere l'opzione opportuna).
+ */
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+
+
 import it.unipv.ingsw.blackmarket.dealers.CoinFlipDealer;
 import it.unipv.ingsw.blackmarket.dealers.MajorityTrader;
 import it.unipv.ingsw.blackmarket.dealers.TitForTat;
