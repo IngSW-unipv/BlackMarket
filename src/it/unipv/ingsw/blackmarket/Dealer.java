@@ -4,7 +4,7 @@ package it.unipv.ingsw.blackmarket;
 /**
  * A dealer in the black market.
  */
-public abstract class Dealer {
+public abstract class Dealer implements Comparable<Dealer> {
     /// Money made so far.
     private int coins = 0;
 
@@ -54,5 +54,10 @@ public abstract class Dealer {
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         // By default, do nothing.
         // Derived classes may use this method to gather information for future exchanges.
+    }
+
+    @Override
+    public int compareTo(Dealer o) {
+        return -Integer.compare(this.getCoins(), o.getCoins());
     }
 }

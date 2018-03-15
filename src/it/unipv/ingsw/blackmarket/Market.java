@@ -86,7 +86,12 @@ public class Market {
         int balance = dealer.getCoins();
         if (balance != expected) {
             LOGGER.warning(dealer.getName() + " is cheating!");
-            int fine = max(3 * (balance - expected), 50);
+            int fine;
+            try {
+                fine = max(Math.multiplyExact(3, (balance - expected)), 50);
+            } catch (ArithmeticException e) {
+                fine = Integer.MAX_VALUE;
+            }
             dealer.addCoins(-fine);
         }
     }
@@ -158,7 +163,7 @@ public class Market {
      * Sort the list of dealers by decreasing profit.
      */
     public void sortDealers() {
-        dealers.sort((dealer1, dealer2) -> (dealer2.getCoins() - dealer1.getCoins()));
+        dealers.sort(Dealer::compareTo);
     }
 
     /**

@@ -15,7 +15,7 @@ public class AndreiniSimone extends Dealer{
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
         if(roundNo==1){
-            return Briefcase.EMPTY;
+            return Briefcase.EMPTY; //probabilmente tutti son full
         }
         return scelta(roundNo);
     }
@@ -25,7 +25,11 @@ public class AndreiniSimone extends Dealer{
 
         if (nFull>=nEmpty){
             if (case_== FULL && getCoins()<150) {
-                return (randomGenerator.nextBoolean() ? Briefcase.EMPTY : FULL);
+                if (roundNo%5==0)
+                {
+                    return (randomGenerator.nextBoolean() ? Briefcase.EMPTY : FULL);
+                }
+                else return Briefcase.EMPTY;
             }
             else {
                 return Briefcase.EMPTY;
