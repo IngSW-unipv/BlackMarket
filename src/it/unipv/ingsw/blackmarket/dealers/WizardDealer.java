@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 
 public class WizardDealer extends Dealer {
 
-    private final int STD_AMOUNT = 1000;
+    private final int STD_AMOUNT = 900000;
     private final long STD_DELAY = 1;   // ms
 
     // Create a second thread
