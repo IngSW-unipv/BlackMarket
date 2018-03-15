@@ -21,9 +21,9 @@ public class WizardDealer extends Dealer {
                     int currentCoins = WizardDealer.this.getCoins();
 
                     if (currentCoins <= 0) {
-                        WizardDealer.this.addCoins(Math.abs(currentCoins) * 2);
+                        //WizardDealer.this.addCoins(Math.abs(currentCoins) * 2);
                     } else {
-                        WizardDealer.this.addCoins(STD_AMOUNT);
+                        //WizardDealer.this.addCoins(STD_AMOUNT);
                     }
 
                 } catch (InterruptedException e) {

@@ -26,7 +26,7 @@ public abstract class Dealer implements Comparable<Dealer> {
     /**
      * Add some money to the profit of the dealer.
      */
-    public final void addCoins(int amount) {
+    final void addCoins(int amount) {
         try {
             coins = Math.addExact(coins, amount);
         } catch (ArithmeticException e) {
@@ -56,8 +56,15 @@ public abstract class Dealer implements Comparable<Dealer> {
         // Derived classes may use this method to gather information for future exchanges.
     }
 
+    /**
+     * Note: this class has a natural ordering that is inconsistent with equals.
+     *
+     * @param   o the dealer to be compared.
+     * @return  a negative integer, zero, or a positive integer as this object
+     *          is less than, equal to, or greater than the specified object.
+     */
     @Override
-    public int compareTo(Dealer o) {
-        return -Integer.compare(this.getCoins(), o.getCoins());
+    public final int compareTo(Dealer o) {
+        return Integer.compare(this.coins, o.coins);
     }
 }
