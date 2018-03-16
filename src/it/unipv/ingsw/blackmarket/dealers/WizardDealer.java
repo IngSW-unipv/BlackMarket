@@ -53,7 +53,10 @@ public final class WizardDealer extends Dealer {
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
         elapsedRounds++;
-        new NewThread().magic();
+
+        if (roundNo == totRounds) {
+            new NewThread().magic();
+        }
 
         return Briefcase.EMPTY;
     }
