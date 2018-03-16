@@ -6,7 +6,7 @@ package it.unipv.ingsw.blackmarket;
  */
 public abstract class Dealer implements Comparable<Dealer> {
     /// Money made so far.
-    private int coins = 0;
+    private long coins = 0;
 
     /**
      * Get the name of the Dealer.
@@ -19,18 +19,18 @@ public abstract class Dealer implements Comparable<Dealer> {
     /**
      * Return the profit made by this dealer in its trading activities.
      */
-    public final int getCoins() {
+    public final long getCoins() {
         return coins;
     }
 
     /**
      * Add some money to the profit of the dealer.
      */
-    final void addCoins(int amount) {
+    final void addCoins(long amount) {
         try {
             coins = Math.addExact(coins, amount);
         } catch (ArithmeticException e) {
-            coins = Integer.MIN_VALUE;
+            coins = Long.MIN_VALUE;
         }
     }
 
@@ -65,6 +65,6 @@ public abstract class Dealer implements Comparable<Dealer> {
      */
     @Override
     public final int compareTo(Dealer o) {
-        return Integer.compare(this.coins, o.coins);
+        return Long.compare(this.coins, o.coins);
     }
 }

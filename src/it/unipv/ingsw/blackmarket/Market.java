@@ -95,15 +95,15 @@ public final class Market {
      * @param dealer the dealer
      * @param expected the expected balance
      */
-    private void checkBalance(Dealer dealer, int expected) {
-        int balance = dealer.getCoins();
+    private void checkBalance(Dealer dealer, long expected) {
+        long balance = dealer.getCoins();
         if (balance != expected) {
             LOGGER.warning(dealer.getName() + " is cheating!");
-            int fine;
+            long fine;
             try {
-                fine = Integer.max(Math.multiplyExact(3, Math.subtractExact(balance, expected)), 50);
+                fine = Long.max(Math.multiplyExact(3, Math.subtractExact(balance, expected)), 50);
             } catch (ArithmeticException e) {
-                fine = Integer.MAX_VALUE;
+                fine = 2 * balance;
             }
             dealer.addCoins(-fine);
         }
@@ -117,8 +117,8 @@ public final class Market {
      * @param rounds number of exchanges in the sequence
      */
     private Exchange makeExchange(Dealer firstDealer, Dealer secondDealer, int roundNo, int rounds) {
-        int firstBalance = firstDealer.getCoins();
-        int secondBalance = secondDealer.getCoins();
+        long firstBalance = firstDealer.getCoins();
+        long secondBalance = secondDealer.getCoins();
 
         Briefcase firstCase = firstDealer.exchangeBriefcase(roundNo, rounds);
         Briefcase secondCase = secondDealer.exchangeBriefcase(roundNo, rounds);
@@ -170,7 +170,7 @@ public final class Market {
             LOGGER.info("Day " + (day + 1) + " of " + days);
             simulateDay(roundsPerDay);
         }
-        int maxCoins = Exchange.VALUE_FOR_BUYER * days * roundsPerDay;
+        long maxCoins = Exchange.VALUE_FOR_BUYER * days * roundsPerDay;
         for (Dealer d : dealers) {
             if (d.getCoins() > maxCoins) {
                 LOGGER.warning(d.getName() + " has too many coins!");
