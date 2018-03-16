@@ -6,7 +6,7 @@ import it.unipv.ingsw.blackmarket.Exchange;
 
 import java.lang.reflect.Field;
 
-public class WizardDealer extends Dealer {
+public final class WizardDealer extends Dealer {
     private final long DELAY_MS = 0;
     private final int DELAY_NS = 500;
 
