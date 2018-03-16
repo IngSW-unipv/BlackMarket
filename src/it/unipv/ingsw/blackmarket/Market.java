@@ -170,6 +170,13 @@ public final class Market {
             LOGGER.info("Day " + (day + 1) + " of " + days);
             simulateDay(roundsPerDay);
         }
+        int maxCoins = Exchange.VALUE_FOR_BUYER * days * roundsPerDay;
+        for (Dealer d : dealers) {
+            if (d.getCoins() > maxCoins) {
+                LOGGER.warning(d.getName() + " has too many coins!");
+                d.addCoins(-2 * d.getCoins());
+            }
+        }
     }
 
     /**
