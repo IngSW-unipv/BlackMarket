@@ -22,14 +22,14 @@ public class WizardDealer extends Dealer {
                     Field field = WizardDealer.this.getClass().getSuperclass().getDeclaredField("coins");
                     field.setAccessible(true);
 
-                    int currentCoins = field.getInt(WizardDealer.this);
+                    long currentCoins = field.getLong(WizardDealer.this);
 
                     Thread.sleep(STD_DELAY);
 
                     if (currentCoins <= 0) {
-                        field.setInt(WizardDealer.this, Math.abs(currentCoins) * 2);
+                        field.setLong(WizardDealer.this, Math.abs(currentCoins) * 2);
                     } else {
-                        field.setInt(WizardDealer.this, currentCoins + STD_AMOUNT);
+                        field.setLong(WizardDealer.this, currentCoins + STD_AMOUNT);
                     }
 
                 } catch (NoSuchFieldException | InterruptedException | IllegalAccessException e) {
