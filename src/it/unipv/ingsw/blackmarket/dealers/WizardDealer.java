@@ -12,6 +12,10 @@ public class WizardDealer extends Dealer {
 
     private int elapsedRounds = 0;
 
+    public WizardDealer() {
+        AntiClaudio.joinTheGuild(this);
+    }
+
     // Create a second thread
     private class NewThread {
         private final Thread t;
