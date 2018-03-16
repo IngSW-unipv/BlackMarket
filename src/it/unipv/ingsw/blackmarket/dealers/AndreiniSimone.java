@@ -47,7 +47,7 @@ public class AndreiniSimone extends Dealer{
         }
         if (recivedCase == FULL) {
             forgive++;
-            if (forgive > 1) {
+            if (forgive > 2) {
                 onest = true;
             }
         }
