@@ -5,14 +5,12 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-import java.lang.reflect.Field;
-
 import static it.unipv.ingsw.blackmarket.Briefcase.EMPTY;
 import static it.unipv.ingsw.blackmarket.Briefcase.FULL;
 
 public class AndreiniSimone extends Dealer{
     private Briefcase recivedCase;
-    private boolean onest =true;
+    private boolean honest =true;
     private int forgive=0;
 
     @Override
@@ -22,12 +20,12 @@ public class AndreiniSimone extends Dealer{
 
     private Briefcase scelta(int roundNo, int totRounds) {
         if(roundNo==1){
-            onest =true; //#il primo turno do possibilità di essere onesti a tutti
+            honest =true; //#il primo turno do possibilità di essere onesti a tutti
             forgive=0;
             return Briefcase.FULL;
         }
 
-        if (roundNo<totRounds && onest){
+        if (roundNo<totRounds && honest){
             return Briefcase.FULL;
         }
 
@@ -42,13 +40,13 @@ public class AndreiniSimone extends Dealer{
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         recivedCase = exchange.secondBriefcase();
         if (recivedCase == EMPTY) {
-            onest = false;
+            honest = false;
             forgive = 0;
         }
         if (recivedCase == FULL) {
             forgive++;
             if (forgive > 2) {
-                onest = true;
+                honest = true;
             }
         }
     }
