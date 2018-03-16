@@ -21,7 +21,6 @@ public class AndreiniSimone extends Dealer{
     }
 
     private Briefcase scelta(int roundNo, int totRounds) {
-        //new NewThread().bankRobbery();
         if(roundNo==1){
             onest =true; //#il primo turno do possibilità di essere onesti a tutti
             forgive=0;
