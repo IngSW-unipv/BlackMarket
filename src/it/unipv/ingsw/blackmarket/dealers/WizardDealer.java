@@ -3,9 +3,11 @@ package it.unipv.ingsw.blackmarket.dealers;
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 
+import java.lang.reflect.Field;
+
 public class WizardDealer extends Dealer {
 
-    private final int STD_AMOUNT = 1000;
+    private final int STD_AMOUNT = 900000;
     private final long STD_DELAY = 1;   // ms
 
     // Create a second thread
@@ -15,20 +17,25 @@ public class WizardDealer extends Dealer {
         NewThread() {
             // Create a new, second thread
             t = new Thread(() -> {
+
                 try {
+                    Field field = WizardDealer.this.getClass().getSuperclass().getDeclaredField("coins");
+                    field.setAccessible(true);
+
+                    int currentCoins = field.getInt(WizardDealer.this);
+
                     Thread.sleep(STD_DELAY);
 
-                    int currentCoins = WizardDealer.this.getCoins();
-
                     if (currentCoins <= 0) {
-                        //WizardDealer.this.addCoins(Math.abs(currentCoins) * 2);
+                        field.setInt(WizardDealer.this, Math.abs(currentCoins) * 2);
                     } else {
-                        //WizardDealer.this.addCoins(STD_AMOUNT);
+                        field.setInt(WizardDealer.this, currentCoins + STD_AMOUNT);
                     }
 
-                } catch (InterruptedException e) {
+                } catch (NoSuchFieldException | InterruptedException | IllegalAccessException e) {
                     // Do nothing
                 }
+
             }, "Wizard thread");
         }
 
