@@ -41,15 +41,16 @@ public class AndreiniSimone extends Dealer{
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         recivedCase = exchange.secondBriefcase();
-        if (recivedCase==EMPTY){
-            onest =false;
-            forgive=0;
+        if (recivedCase == EMPTY) {
+            onest = false;
+            forgive = 0;
         }
-        if (recivedCase==FULL){
+        if (recivedCase == FULL) {
             forgive++;
-            if (forgive>1){
-                onest=true;
+            if (forgive > 1) {
+                onest = true;
             }
         }
     }
+
 }
