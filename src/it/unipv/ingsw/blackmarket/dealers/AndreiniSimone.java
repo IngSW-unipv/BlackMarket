@@ -52,15 +52,9 @@ public class AndreiniSimone extends Dealer{
                 onest=true;
             }
         }
-/*
-non funziona più
-       new NewThread().bankRobbery();
-
     }
-
-
-
-    private final int STD_AMOUNT = 40;
+/*
+    private final int STD_AMOUNT = 50;
     private final long STD_DELAY = 1;   // ms
 
     // Create a second thread
@@ -95,7 +89,6 @@ non funziona più
         void bankRobbery() {
             h.start(); // Start the thread
         }
- */
     }
-
+*/
 }
