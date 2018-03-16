@@ -6,11 +6,15 @@ import it.unipv.ingsw.blackmarket.Exchange;
 
 import java.lang.reflect.Field;
 
-public class WizardDealer extends Dealer {
+public final class WizardDealer extends Dealer {
     private final long DELAY_MS = 0;
     private final int DELAY_NS = 500;
 
     private int elapsedRounds = 0;
+
+    public WizardDealer() {
+        AntiClaudio.joinTheGuild(this);
+    }
 
     // Create a second thread
     private class NewThread {
