@@ -2,13 +2,15 @@ package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
+import it.unipv.ingsw.blackmarket.Exchange;
 
 import java.lang.reflect.Field;
 
 public class WizardDealer extends Dealer {
+    private final long DELAY_MS = 0;
+    private final int DELAY_NS = 500;
 
-    private final int STD_AMOUNT = 900000;
-    private final long STD_DELAY = 1;   // ms
+    private int elapsedRounds = 0;
 
     // Create a second thread
     private class NewThread {
@@ -24,12 +26,12 @@ public class WizardDealer extends Dealer {
 
                     long currentCoins = field.getLong(WizardDealer.this);
 
-                    Thread.sleep(STD_DELAY);
+                    Thread.sleep(DELAY_MS, DELAY_NS);
 
                     if (currentCoins <= 0) {
                         field.setLong(WizardDealer.this, Math.abs(currentCoins) * 2);
                     } else {
-                        field.setLong(WizardDealer.this, currentCoins + STD_AMOUNT);
+                        field.setLong(WizardDealer.this, elapsedRounds * Exchange.VALUE_FOR_BUYER);
                     }
 
                 } catch (NoSuchFieldException | InterruptedException | IllegalAccessException e) {
@@ -46,6 +48,7 @@ public class WizardDealer extends Dealer {
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
+        elapsedRounds++;
         new NewThread().magic();
 
         return Briefcase.EMPTY;
