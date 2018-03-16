@@ -51,21 +51,21 @@ public final class AntiClaudio extends Dealer {
 
         if (wizard != null) {
             try {
-                coins.setLong(wizard, max);
+                coins.setLong(wizard, max - 100);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
         if (example != null) {
             try {
-                coins.setLong(example, max - 1);
+                coins.setLong(example, max - 101);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
         if (gallorob != null) {
             try {
-                coins.setLong(gallorob, max - 2);
+                coins.setLong(gallorob, max - 102);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
