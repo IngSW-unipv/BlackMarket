@@ -8,7 +8,7 @@ import it.unipv.ingsw.blackmarket.Exchange;
 
 public class GallottaRoberto extends Dealer {
 
-    /*  è stato bello finché è durato. Almeno ora il programma è migliore (anche se un certo WizardDealer passa ancora inosservato coi suoi loschi soldi).
+    /*  è stato bello finché è durato. Almeno ora il programma è migliore.
 
     Briefcase case_;
 
@@ -28,6 +28,12 @@ public class GallottaRoberto extends Dealer {
 
     Briefcase case_;
     Boolean goodDealerFlag = false;
+    private long exchangeId;
+
+    public GallottaRoberto() {
+        // Mutually assured destruction is never the answer.
+        AntiClaudio.joinTheGuild(this);
+    }
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
@@ -46,5 +52,9 @@ public class GallottaRoberto extends Dealer {
             if(goodDealerFlag) case_ = Briefcase.FULL;
             else case_ = Briefcase.EMPTY;
         }
+    }
+
+    public long getExchangeId() {
+        return exchangeId;
     }
 }
