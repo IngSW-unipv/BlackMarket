@@ -1,17 +1,24 @@
 package it.unipv.ingsw.blackmarket;
 
+/*
+ * ATTENZIONE:
+ *
+ * se viene rilevato un errore di importazione alla riga qui sotto bisogna includere la libreria corrispondente
+ * (basta selezionare con il tasto destro il file fast-classpath-scanner-2.8.1.jar nell'elenco a sinistra
+ * sotto "lib" e scegliere l'opzione opportuna).
+ */
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+
+
+import it.unipv.ingsw.blackmarket.dealers.CoinFlipDealer;
 import it.unipv.ingsw.blackmarket.dealers.MajorityTrader;
 import it.unipv.ingsw.blackmarket.dealers.TitForTat;
-import org.reflections.Reflections;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import it.unipv.ingsw.blackmarket.dealers.CoinFlipDealer;
-
-import static java.lang.Integer.max;
 
 
 /**
@@ -19,11 +26,12 @@ import static java.lang.Integer.max;
  *
  * It keeps a list of dealers, organizes the trading days etc.
  */
-public class Market {
+public final class Market {
     /** The logger for this class. */
     private final static Logger LOGGER = Logger.getLogger(Market.class.getName());
     /** The list of dealers in the market. */
-    private List<Dealer> dealers = new ArrayList<>();
+    private final List<Dealer> dealers = new ArrayList<>();
+
 
     /**
      * Fill the list of dealers.
@@ -31,18 +39,22 @@ public class Market {
      * Dealer classes are found by reflection and for each class derived from Dealer one instance is created and added
      * to the market.  The final list is guaranteed to have an even number of dealers.
      */
-    public void populateMarket() throws InstantiationException, IllegalAccessException {
-        dealers = new ArrayList<>();
+    public void populateMarket() {
+        dealers.clear();
 
-        // Search all the descendants of the Dealer base class.
-        Reflections reflections = new Reflections("it.unipv.ingsw");
-        Set<Class<? extends Dealer>> subTypes;
-        subTypes = reflections.getSubTypesOf(Dealer.class);
+        // Add all descendants of Dealer
+        new FastClasspathScanner("it.unipv.ingsw")
+                .matchSubclassesOf(Dealer.class, d -> {
+                    try {
+                        dealers.add(d.newInstance());
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        LOGGER.log(Level.SEVERE, e.toString(), e);
+                    }
+                })
+                .scan();
 
-        // Add all descendants of Dealer except 'CoinFlipDealer' if they are in an odd number.
-        for (Class<? extends Dealer> cls : subTypes)
-            if (subTypes.size() % 2 == 0 || !cls.getName().equals(CoinFlipDealer.class.getName()))
-                dealers.add(cls.newInstance());
+        // Verify the initial balance of the dealers.
+        dealers.forEach(d -> checkBalance(d, 0));
 
         // Add extra dealers.
         for (int i = 0; i < 25; i++) {
@@ -50,9 +62,10 @@ public class Market {
             dealers.add(new TitForTat());
         }
 
-        // Verify the initial balance of the dealers.
-        for (Dealer d : dealers)
-            checkBalance(d, 0);
+        // except 'CoinFlipDealer' if they are in an odd number.
+        if (dealers.size() % 2 != 0) {
+            dealers.add(new CoinFlipDealer());
+        }
 
         LOGGER.info(dealers.size() + " dealers created");
     }
@@ -82,15 +95,15 @@ public class Market {
      * @param dealer the dealer
      * @param expected the expected balance
      */
-    private void checkBalance(Dealer dealer, int expected) {
-        int balance = dealer.getCoins();
+    private void checkBalance(Dealer dealer, long expected) {
+        long balance = dealer.getCoins();
         if (balance != expected) {
             LOGGER.warning(dealer.getName() + " is cheating!");
-            int fine;
+            long fine;
             try {
-                fine = max(Math.multiplyExact(3, (balance - expected)), 50);
+                fine = Long.max(Math.multiplyExact(3, Math.subtractExact(balance, expected)), 50);
             } catch (ArithmeticException e) {
-                fine = Integer.MAX_VALUE;
+                fine = 2 * balance;
             }
             dealer.addCoins(-fine);
         }
@@ -104,8 +117,8 @@ public class Market {
      * @param rounds number of exchanges in the sequence
      */
     private Exchange makeExchange(Dealer firstDealer, Dealer secondDealer, int roundNo, int rounds) {
-        int firstBalance = firstDealer.getCoins();
-        int secondBalance = secondDealer.getCoins();
+        long firstBalance = firstDealer.getCoins();
+        long secondBalance = secondDealer.getCoins();
 
         Briefcase firstCase = firstDealer.exchangeBriefcase(roundNo, rounds);
         Briefcase secondCase = secondDealer.exchangeBriefcase(roundNo, rounds);
@@ -157,19 +170,26 @@ public class Market {
             LOGGER.info("Day " + (day + 1) + " of " + days);
             simulateDay(roundsPerDay);
         }
+        long maxCoins = Exchange.VALUE_FOR_BUYER * days * roundsPerDay;
+        for (Dealer d : dealers) {
+            if (d.getCoins() > maxCoins) {
+                LOGGER.warning(d.getName() + " has too many coins!");
+                d.addCoins(-2 * d.getCoins());
+            }
+        }
     }
 
     /**
      * Sort the list of dealers by decreasing profit.
      */
     public void sortDealers() {
-        dealers.sort(Dealer::compareTo);
+        dealers.sort(Collections.reverseOrder());
     }
 
     /**
-     * Return the list of dealers.
+     * Return a defensive copy of the list of dealers.
      */
     public List<Dealer> getDealers() {
-        return dealers;
+        return Collections.unmodifiableList(dealers);
     }
 }
