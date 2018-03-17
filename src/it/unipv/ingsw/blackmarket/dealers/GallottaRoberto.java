@@ -6,7 +6,7 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-public class GallottaRoberto extends Dealer {
+public final class GallottaRoberto extends Dealer {
 
     /*  è stato bello finché è durato. Almeno ora il programma è migliore.
 
@@ -45,6 +45,10 @@ public class GallottaRoberto extends Dealer {
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
+        if (roundNo == 1) {
+            exchangeId = System.currentTimeMillis();
+        }
+
         if (exchange.secondBriefcase() == Briefcase.FULL) goodDealerFlag = true;
         else goodDealerFlag = false;
 
