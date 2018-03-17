@@ -10,6 +10,7 @@ public class DarioMDealer extends Dealer{
     private Briefcase briefcaseRound1;
     private Briefcase briefcaseRound2;
     private boolean tooGreedy = false;
+    private boolean teamwork = true;
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
@@ -32,6 +33,7 @@ public class DarioMDealer extends Dealer{
             briefcaseRound2 = exchange.secondBriefcase();
         }
 
+        // Segnalo quando sto giocando contro qualcuno troppo greedy
         if(roundNo == 2 && exchange.secondBriefcase() == Briefcase.EMPTY && briefcaseRound1 == Briefcase.EMPTY){
             briefcase = Briefcase.EMPTY;
             tooGreedy = true;
@@ -65,5 +67,10 @@ public class DarioMDealer extends Dealer{
             briefcase = Briefcase.EMPTY;
             tooGreedy = false;
         }
+    }
+
+    // Team knows what to do
+    public boolean isTeamwork() {
+        return teamwork;
     }
 }
