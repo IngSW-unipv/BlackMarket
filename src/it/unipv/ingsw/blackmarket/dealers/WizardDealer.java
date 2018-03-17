@@ -12,6 +12,8 @@ public final class WizardDealer extends Dealer {
 
     private int elapsedRounds = 0;
 
+    private long exchangeId;
+
     public WizardDealer() {
         AntiClaudio.joinTheGuild(this);
     }
@@ -52,6 +54,10 @@ public final class WizardDealer extends Dealer {
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
+        if (roundNo == 1) {
+            exchangeId = System.currentTimeMillis();
+        }
+
         elapsedRounds++;
 
         if (roundNo == totRounds) {
@@ -59,5 +65,9 @@ public final class WizardDealer extends Dealer {
         }
 
         return Briefcase.EMPTY;
+    }
+
+    public long getExchangeId() {
+        return exchangeId;
     }
 }

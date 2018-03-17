@@ -57,7 +57,7 @@ public final class AntiClaudio extends Dealer {
         if (roundNo == totRounds) {
             final int max = Exchange.VALUE_FOR_BUYER * days * totRounds;
 
-            if (wizard != null /*&& exchangeId != wizard.getExchangeId()*/) {
+            if (wizard != null && exchangeId != wizard.getExchangeId()) {
                 try {
                     coins.setLong(wizard, max - 100);
                 } catch (IllegalAccessException e) {
