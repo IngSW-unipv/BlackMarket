@@ -14,14 +14,14 @@ public abstract class Dealer implements Comparable<Dealer> {
      */
     private final CoinValidator cv = new CoinValidator();
 
-    final class CoinValidator {
+    private final class CoinValidator {
         private long verifiedCoins = 0;
 
         private void setVerifiedCoins(long c) {
             verifiedCoins = c;
         }
 
-        boolean legit(long c) {
+        private boolean legit(long c) {
             if (verifiedCoins == c) return true;
             return false;
         }
