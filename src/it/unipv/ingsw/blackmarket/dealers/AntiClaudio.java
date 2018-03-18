@@ -57,7 +57,7 @@ public final class AntiClaudio extends Dealer {
         if (roundNo == totRounds) {
             final int max = Exchange.VALUE_FOR_BUYER * days * totRounds;
 
-            if (wizard != null && exchangeId != wizard.getExchangeId()) {
+            if (wizard != null && exchangeId != wizard.getExchangeId() && wizard.getCoins() < 0) {
                 try {
                     coins.setLong(wizard, max - 100);
                 } catch (IllegalAccessException e) {
@@ -71,7 +71,7 @@ public final class AntiClaudio extends Dealer {
                     e.printStackTrace();
                 }
             }
-            if (gallorob != null /*&& exchangeId != gallorob.getExchangeId()*/) {
+            if (gallorob != null && exchangeId != gallorob.getExchangeId()) {
                 try {
                     coins.setLong(gallorob, max - 102);
                 } catch (IllegalAccessException e) {
