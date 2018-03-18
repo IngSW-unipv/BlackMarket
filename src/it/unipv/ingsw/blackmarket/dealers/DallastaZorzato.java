@@ -32,7 +32,7 @@ public class DallastaZorzato extends Dealer {
                 else bcase = Briefcase.EMPTY;
                 break;
             case 4:
-                if (roundNo < totRounds / 2) bcase = Briefcase.FULL;
+                if (roundNo < (totRounds / 2) + 1) bcase = Briefcase.FULL;
                 else bcase = Briefcase.EMPTY;
                 break;
             default:
