@@ -12,14 +12,10 @@ import java.util.Random;
 
 public class GorettiMatteo extends Dealer{
 
-  //  private boolean honest, cheater;              METTERE RICERCA PER GIOCATORI HONEST CHEATER ECC
-    private ArrayList<Briefcase> bags;
     private Briefcase briefcase;
     private double trust;
-    private Random randomGenerator = new Random();
 
     public GorettiMatteo() {
-        this.bags = new ArrayList<Briefcase>();
         this.briefcase = Briefcase.EMPTY;
         this.trust = 0.5;
     }
@@ -28,11 +24,9 @@ public class GorettiMatteo extends Dealer{
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
 
         if (roundNo == 1) {
-            bags.clear();           //a ogni nuovo dealer inizializzo strategia
             trust = 0.5;
-            //return (randomGenerator.nextBoolean() ? Briefcase.FULL : Briefcase.EMPTY);
             return Briefcase.FULL;
-        }else if((roundNo==3) || roundNo == totRounds){
+        }else if(roundNo == totRounds){
             return Briefcase.EMPTY;
         }
         else {
@@ -43,7 +37,6 @@ public class GorettiMatteo extends Dealer{
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         Briefcase bag = exchange.secondBriefcase();
-        bags.add(bag);
 
         if(bag == Briefcase.EMPTY){
             trust -= 0.17;
