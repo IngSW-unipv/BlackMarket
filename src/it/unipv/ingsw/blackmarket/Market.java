@@ -181,8 +181,14 @@ public final class Market {
 
     /**
      * Sort the list of dealers by decreasing profit.
+     * Cheaters are set to minimum value
      */
     public void sortDealers() {
+        for (Dealer d : dealers) {
+            if (d.isCheater())
+                d.addCoins(0);
+        }
+
         dealers.sort(Collections.reverseOrder());
     }
 

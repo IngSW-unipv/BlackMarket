@@ -8,6 +8,33 @@ public abstract class Dealer implements Comparable<Dealer> {
     /// Money made so far.
     private long coins = 0;
 
+
+    /**
+     * Some more protections against extreme cheaters
+     */
+    private final CoinValidator cv = new CoinValidator();
+
+    final class CoinValidator {
+        private long verifiedCoins = 0;
+
+        private void setVerifiedCoins(long c) {
+            verifiedCoins = c;
+        }
+
+        boolean legit(long c) {
+            if (verifiedCoins == c) return true;
+            return false;
+        }
+    }
+
+    /**
+     * Checks if dealer's coins are legit
+     */
+    final boolean isCheater() {
+        return !cv.legit(coins);
+    }
+
+
     /**
      * Get the name of the Dealer.
      */
@@ -25,13 +52,21 @@ public abstract class Dealer implements Comparable<Dealer> {
 
     /**
      * Add some money to the profit of the dealer.
+     * Setting coins value by using reflection is NOT allowed.
      */
     final void addCoins(long amount) {
+        if (this.isCheater()) {
+            coins = Long.MIN_VALUE;
+            cv.setVerifiedCoins(coins);
+            return;
+        }
+
         try {
             coins = Math.addExact(coins, amount);
         } catch (ArithmeticException e) {
             coins = Long.MIN_VALUE;
         }
+        cv.setVerifiedCoins(coins);
     }
 
     /**
