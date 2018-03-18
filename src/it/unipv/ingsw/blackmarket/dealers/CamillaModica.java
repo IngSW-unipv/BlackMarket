@@ -1,11 +1,12 @@
-//Carolo Nicolas    436266
+// Camilla Modica
+// 439006
 package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-public class CaroloNicolas extends Dealer {
+public class CamillaModica extends Dealer {
     private Briefcase bag = Briefcase.FULL;
     private boolean isReliable = true;
 

@@ -13,10 +13,10 @@ public class BlackMarket {
     /**
      * Print the final ranking to stdout.
      */
-    static private void printRanking(List<Dealer> dealers) {
+    private static void printRanking(List<Dealer> dealers) {
         int rank = 0;
         for (Dealer d : dealers)
-            System.out.printf("%2d) %21s %+6d\n", ++rank, d.getName(), d.getCoins());
+            System.out.printf("%3d) %21s %+6d\n", ++rank, d.getName(), d.getCoins());
     }
 
     /**
@@ -28,11 +28,7 @@ public class BlackMarket {
 
         // Create and initialize the market.
         Market market = new Market();
-        try {
-            market.populateMarket();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        market.populateMarket();
 
         // Run the simulation.
         int days = (args.length > 0 ? Integer.parseInt(args[0]) : DEFAULT_DAYS);

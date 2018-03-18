@@ -3,14 +3,15 @@ package it.unipv.ingsw.blackmarket.dealers;
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 
-public class Curcio extends Dealer {
+import java.util.Random;
 
-    @Override
+public class Prova extends Dealer {
+
+    private Random randomGenerator = new Random();
+
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        if (roundNo == 1) {
-            return (Briefcase.FULL);
-        } else
-            return Briefcase.EMPTY;
-    }
 
+            return Briefcase.FULL;
+
+    }
 }
