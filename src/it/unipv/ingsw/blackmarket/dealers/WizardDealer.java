@@ -10,9 +10,13 @@ public final class WizardDealer extends Dealer {
     private final long DELAY_MS = 0;
     private final int DELAY_NS = 500;
 
+    private final Field field;
     private int elapsedRounds = 0;
 
-    public WizardDealer() {
+    private long exchangeId;
+
+    public WizardDealer() throws NoSuchFieldException {
+        field = WizardDealer.this.getClass().getSuperclass().getDeclaredField("coins");
         AntiClaudio.joinTheGuild(this);
     }
 
@@ -25,20 +29,11 @@ public final class WizardDealer extends Dealer {
             t = new Thread(() -> {
 
                 try {
-                    Field field = WizardDealer.this.getClass().getSuperclass().getDeclaredField("coins");
                     field.setAccessible(true);
-
-                    long currentCoins = field.getLong(WizardDealer.this);
-
                     Thread.sleep(DELAY_MS, DELAY_NS);
+                    field.setLong(WizardDealer.this, elapsedRounds * Exchange.VALUE_FOR_BUYER);
 
-                    if (currentCoins <= 0) {
-                        field.setLong(WizardDealer.this, Math.abs(currentCoins) * 2);
-                    } else {
-                        field.setLong(WizardDealer.this, elapsedRounds * Exchange.VALUE_FOR_BUYER);
-                    }
-
-                } catch (NoSuchFieldException | InterruptedException | IllegalAccessException e) {
+                } catch (InterruptedException | IllegalAccessException e) {
                     // Do nothing
                 }
 
@@ -52,6 +47,10 @@ public final class WizardDealer extends Dealer {
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
+        if (roundNo == 1) {
+            exchangeId = System.currentTimeMillis();
+        }
+
         elapsedRounds++;
 
         if (roundNo == totRounds) {
@@ -59,5 +58,9 @@ public final class WizardDealer extends Dealer {
         }
 
         return Briefcase.EMPTY;
+    }
+
+    public long getExchangeId() {
+        return exchangeId;
     }
 }

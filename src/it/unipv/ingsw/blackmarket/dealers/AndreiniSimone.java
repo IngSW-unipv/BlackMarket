@@ -31,7 +31,7 @@ public class AndreiniSimone extends Dealer{
         }
 
         if (roundNo<totRounds && honest){
-            if (count>3){
+            if (count>3 || forgive>4){
                 return Briefcase.EMPTY;
             }
             else {
