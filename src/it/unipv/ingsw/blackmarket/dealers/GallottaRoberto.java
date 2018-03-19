@@ -1,4 +1,7 @@
-// Gallotta Roberto, 435774
+/**
+ * GALLOTTA ROBERTO, 435774
+  */
+
 
 package it.unipv.ingsw.blackmarket.dealers;
 
@@ -6,9 +9,15 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
+/**
+ * Dealer puramente baro. Inizialmente sfruttava l'overflow della fine per massimizzare i guadagni, ma MuffinOverlord ha detto no.
+ * Per evitare faide interne è stata stretta un'alleanza vantaggiosa per entrambi (si può vedere come un piccolo oligopolio o come governo elitario).
+ * Se a Cusano la cosa fa torcere il naso, si dimentichi questo dealer e si consideri invece il dealer LegitGallo.
+ */
+
 public final class GallottaRoberto extends Dealer {
 
-    /*  è stato bello finché è durato. Almeno ora il programma è migliore.
+    /* è stato bello finché è durato. Almeno ora il programma è migliore.
 
     Briefcase case_;
 
@@ -22,12 +31,8 @@ public final class GallottaRoberto extends Dealer {
     	if(roundNo < 5) {
         	this.addCoins(1000000000); //è barare se il metodo permette di approfittarne? circa 2^30 per mandare in overflow la fine
         }
-    }
-    */
+    } */
 
-
-    Briefcase case_;
-    Boolean goodDealerFlag = false;
     private long exchangeId;
 
     public GallottaRoberto() {
@@ -35,26 +40,16 @@ public final class GallottaRoberto extends Dealer {
         AntiClaudio.joinTheGuild(this);
     }
 
+    // Metodi semplificati per evitare inutili perdite
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        if (roundNo == 1 | roundNo == 2) {
-            case_ = Briefcase.FULL;
-        }
-        return case_;
+        return Briefcase.EMPTY;
     }
 
     @Override
-    public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
+    public final void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         if (roundNo == 1) {
             exchangeId = System.currentTimeMillis();
-        }
-
-        if (exchange.secondBriefcase() == Briefcase.FULL) goodDealerFlag = true;
-        else goodDealerFlag = false;
-
-        if (roundNo > 2) {
-            if(goodDealerFlag) case_ = Briefcase.FULL;
-            else case_ = Briefcase.EMPTY;
         }
     }
 
