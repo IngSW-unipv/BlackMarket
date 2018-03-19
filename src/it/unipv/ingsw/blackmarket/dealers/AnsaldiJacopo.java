@@ -12,7 +12,7 @@ public class AnsaldiJacopo extends Dealer {
     private Briefcase last;
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-       if(roundNo == 0){
+       if(roundNo == 1){
            return Briefcase.FULL;
        }
        if(roundNo==totRounds) return Briefcase.EMPTY;

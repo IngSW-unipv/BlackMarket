@@ -1,6 +1,8 @@
 package it.unipv.ingsw.blackmarket;
 
 
+import it.unipv.ingsw.blackmarket.dealers.AnsaldiJacopo;
+
 /**
  * A dealer in the black market.
  */
