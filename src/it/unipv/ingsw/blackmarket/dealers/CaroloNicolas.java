@@ -5,14 +5,9 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-public final class CaroloNicolas extends Dealer {
+public class CaroloNicolas extends Dealer {
     private Briefcase bag = Briefcase.FULL;
     private boolean isReliable = true;
-    private long exchangeId;
-
-    public CaroloNicolas() {
-        AntiWizard.fightTheWizard(this);
-    }
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
@@ -20,7 +15,6 @@ public final class CaroloNicolas extends Dealer {
             bag = Briefcase.FULL;
             isReliable = true;
         }
-
         if (roundNo > totRounds / 2){
             return Briefcase.EMPTY;
         } else {
@@ -36,9 +30,4 @@ public final class CaroloNicolas extends Dealer {
             isReliable = false;
         }
     }
-
-    public long getExchangeId() {
-        return exchangeId;
-    }
-
 }
