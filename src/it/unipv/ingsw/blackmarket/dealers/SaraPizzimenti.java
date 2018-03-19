@@ -11,6 +11,7 @@ import java.util.List;
 public class SaraPizzimenti extends Dealer {
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
+
         if(roundNo == 0)
             return Briefcase.FULL;
         if(this.getCoins()<0)
