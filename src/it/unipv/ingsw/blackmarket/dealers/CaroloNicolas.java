@@ -1,13 +1,30 @@
 //Carolo Nicolas    436266
-//Modica Camilla    439006
 package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
+import it.unipv.ingsw.blackmarket.Exchange;
 
-public class CaroloNicolas extends Dealer {
+public final class CaroloNicolas extends Dealer {
+    private Briefcase bag = Briefcase.FULL;
+
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        return Briefcase.EMPTY;
+        if (roundNo == 1){
+            bag = Briefcase.FULL;
+        }
+        if (roundNo > (totRounds / 2) + 1){
+            return Briefcase.EMPTY;
+        } else {
+            return bag;
+        }
+    }
+
+    public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
+        if (exchange.secondBriefcase().equals(Briefcase.FULL)){
+            bag = Briefcase.FULL;
+        } else{
+            bag = Briefcase.EMPTY;
+        }
     }
 }
