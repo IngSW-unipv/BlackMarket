@@ -2,16 +2,25 @@ package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
+import it.unipv.ingsw.blackmarket.Exchange;
 
 
 public class Cabrini extends Dealer {
+    Briefcase case_;
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        if(roundNo > 0 && roundNo < 6)
+        if(roundNo == 1)
             return Briefcase.EMPTY;
         else
-            return Briefcase.FULL;
+            return case_;
     }
 
+    @Override
+    public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
+        if(roundNo > 5 )
+            case_ = exchange.secondBriefcase();
+        else
+            case_ = Briefcase.EMPTY;
+    }
 }
