@@ -1,4 +1,5 @@
-// Dall'Asta Simonetta (matricola 434524) -- Zorzato Riccardo (matricola 435597)
+// Dall'Asta Simonetta      (matricola 434524)
+// Zorzato Riccardo         (matricola 435597)
 
 package it.unipv.ingsw.blackmarket.dealers;
 import it.unipv.ingsw.blackmarket.*;
@@ -10,7 +11,7 @@ import it.unipv.ingsw.blackmarket.*;
  * 0 - Undefined
  */
 
-public class DallastaZorzato extends Dealer {
+public final class DallastaZorzato extends Dealer {
     private int foe;
 
     @Override
@@ -32,8 +33,8 @@ public class DallastaZorzato extends Dealer {
                 else bcase = Briefcase.EMPTY;
                 break;
             case 4:
-                if (roundNo < totRounds / 2) bcase = Briefcase.FULL;
-                else bcase = Briefcase.EMPTY;
+                if (roundNo > (totRounds/2) + 1) bcase = Briefcase.EMPTY;
+                else bcase = Briefcase.FULL;
                 break;
             default:
                 bcase = Briefcase.FULL;
@@ -51,26 +52,30 @@ public class DallastaZorzato extends Dealer {
 
         switch (roundNo) {
             case 1:
-                if (got.equals(e)) foe = -2;  // not honest
+                if (got.equals(e))
+                    foe = -2;   // not honest
                 break;
             case 2:
-                if (foe == -2 && got.equals(e))  // not T4T or Majority
-                    foe = 2;    // quite sure it's a cheater
+                if (foe == -2 && got.equals(e))  // not t4t or majority
+                    foe = 2;    // cheater
                 else if (foe != -2 && got.equals(e))  // not a standard dealer
                     foe = 0;
-                else if (got.equals(f))  // maybe T4T or Majority
-                    foe = 1;    // let's try giving a empty case and see what happens
+                else if (got.equals(f))
+                    foe = -3;   // let's trust him for another turn
                 break;
             case 3:
-                if (foe == 2 && got.equals(f))  // not a standard dealer
-                    foe = 0;
-                else if (foe == 1 && got.equals(e))  // tit4tat
+                if (foe == -3 && got.equals(f))  // t4t, majority or honest
+                    foe = 1;    // let's give him an empty one and see what happens
+                else if (foe == -3 && got.equals(e))  // didn't expect an empty one there
+                    foe = 0;    // not to be trusted
+                break;
+            case 4:
+                if (foe == 1 && got.equals(e))  // tit4tat
                     foe = 3;
-                else if (foe == 1 && got.equals(f))  // honest or Majority
+                else if (foe == 1 && got.equals(f))  // honest or majority
                     foe = 4;
+            default:
                 break;
         }
-
-
     }
 }

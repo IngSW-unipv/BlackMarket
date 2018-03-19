@@ -1,138 +1,120 @@
 package it.unipv.ingsw.blackmarket.dealers;
-
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
-import it.unipv.ingsw.blackmarket.Market;
-import javafx.scene.effect.Reflection;
 
-import java.lang.reflect.Constructor;
-import java.text.BreakIterator;
 import java.util.ArrayList;
-import java.util.Random;
 
-/*BARBERA CHIARA MATRICOLA 435693*/
-
+/**
+ * BARBERA CHIARA MATRICOLA 435693
+ *
+ */
 public class BarberaChiara extends Dealer{
-
     private int countFull , countEmpty ;
-    private Briefcase firstOpponent, case_;
-    private ArrayList<Briefcase> avversario , CHEATALERT ;
-    private boolean isCheater  , isHonest , modified = false ;
-
+    private Briefcase firstOpponent, case_, lastBriefcase;
+    private ArrayList<Briefcase> avversario , CHEATALERT, TitForTatALERT ;
+    private boolean isCheater  , isHonest , isTitForTat, isMajority, modified = false ;
     public BarberaChiara() {
-
         this.countFull = 0;
         countEmpty = 0 ;
-        firstOpponent = null ;
-        case_ = null ;
-        isHonest = false ;
-        isCheater = false ;
         avversario = new ArrayList<>();
         CHEATALERT = new ArrayList<>(3);
-
+        TitForTatALERT = new ArrayList<>(3);
         for (int i=0 ; i<3 ; i++)
             CHEATALERT.add(Briefcase.EMPTY );
-
+        TitForTatALERT.add(Briefcase.FULL);
+        TitForTatALERT.add(Briefcase.FULL);
+        TitForTatALERT.add(Briefcase.EMPTY);
     }
-
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-
-        // Ai primi due round gioco sempre FULL
-
-        if (roundNo < 2 ) {
+        /** FULL in the first and second round */
+        if (roundNo <= 2 ) {
             return Briefcase.FULL;
         }
-
-        /* HP : roundNo > 1 :
-              Se avversario gioca FULL e poi solo EMPTY, allora dal secondo round in poi gioco solo EMPTY
-              Se l'avversario è un cheater o un Honest, conviene giocare sempre empty
-        */
-
+        /**   Special case: Hp : roundNo > 1 :
+         If the other dealer plays FULL once and then just EMPTY,
+         then it's better to play EMPTY from the second round on .
+         */
         if (roundNo > 1) {
-
             if (firstOpponent == Briefcase.FULL && (avversario.containsAll(CHEATALERT) || countFull == 1)  ){
                 case_ = Briefcase.EMPTY;
                 modified = true ;
             }
-
-            if (avversario.containsAll(CHEATALERT) || isHonest || isCheater ){
+        }
+        /** If the situation is different from the one above (modified == false ), then it will alternate EMPTY and FULL
+         *  in order to gain more points with a MajorityTrader ;
+         *  If the other dealer is Cheater or Honest, then it's better to play EMPTY ;
+         *  If the other dealer is TitForTat , then it's better to play FULL  */
+        if (roundNo > 2 && !modified) {
+            if (avversario.containsAll(CHEATALERT) || isCheater || isHonest){
                 case_ = Briefcase.EMPTY;
                 modified = true ;
             }
-
-
+            if ((avversario.containsAll(TitForTatALERT)&& lastBriefcase== Briefcase.EMPTY && !modified ) ) {
+                case_ = Briefcase.FULL ;
+                modified = true ;
+                isTitForTat = true ;
+            }
+            if (isTitForTat && !modified) {
+                case_ = Briefcase.FULL;
+                modified = true ;
+            }
+            if (roundNo % 2 == 0 && !modified) {
+                case_ = Briefcase.FULL;
+                modified = true;
+                isMajority = true ;
+            } else if (roundNo > 2 && roundNo % 2 != 0 && !modified) {
+                case_ = Briefcase.EMPTY;
+                modified = true;
+                isMajority = true ;
+            }
         }
-
-        // Se non ricado nei casi precedenti (modified == false ) alterno Empty e FULL in modo da massimizzare il guadagno
-        // con un MajorityTrader
-
-        if ( roundNo >= 2 && roundNo % 2 == 0 && ! modified ) {
-            case_ = Briefcase.FULL;
-            modified = true ;
-        }else if (roundNo > 2 && roundNo % 2 != 0 && ! modified) {
-            case_ = Briefcase.EMPTY;
-            modified = true ;
-        }
-
-
-        // Empty sempre all'ultimo round
-
+        // In the last round, the Briefcase is always EMPTY
         if ( roundNo == totRounds){
             return Briefcase.EMPTY;
         }
-
-
         return case_ ;
-
-
-
-
     }
-
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-
-
         if (roundNo == 1)
             firstOpponent = exchange.secondBriefcase() ;
-
-        // conto Empty e Full
-
-        if (exchange.secondBriefcase() == Briefcase.EMPTY)
-            countEmpty ++ ;
-        else if (exchange.secondBriefcase() == Briefcase.FULL)
-            countFull++;
-
+        /** number of EMPTY and FULL Briefcases */
+        countBriefcase(exchange.secondBriefcase());
+        /** The arraylist avversario keeps the cases played by the other dealer ; lastBriefcase is the
+         briefcase this dealer used in the last round played.
+         */
         avversario.add(exchange.secondBriefcase());
-
-        // Verifica di honest e chater
-
-        if ( countEmpty == roundNo )
-            isCheater = true ;
-        else
-            isCheater = false ;
-
-        if ( countFull == roundNo )
+        lastBriefcase = exchange.firstBriefcase();
+        /** Verifies if is honest or is cheater */
+        checkHonestCheater(roundNo);
+        /** reset control values at the end of the day */
+        if (roundNo == totRounds)
+            reset();
+        modified = false ;
+    }
+    private void reset(){
+        countFull = 0;
+        countEmpty = 0;
+        isCheater = false ;
+        isHonest = false ;
+        isTitForTat = false ;
+        isMajority = false ;
+    }
+    private void checkHonestCheater( int roundNo ){
+        if ( countFull == roundNo && roundNo > 2)
             isHonest = true ;
         else
             isHonest = false ;
-
-        // reset dei count e dei boolean a fine giornata
-
-        if (roundNo == totRounds) {
-            countFull = 0;
-            countEmpty = 0;
+        if ( countEmpty == roundNo && roundNo > 2)
+            isCheater = true ;
+        else
             isCheater = false ;
-            isHonest = false ;
-
-        }
-
-        modified = false ;
-
-
-
     }
-
-
+    private void countBriefcase(Briefcase briefcase){
+        if (briefcase == Briefcase.EMPTY)
+            countEmpty ++ ;
+        else if (briefcase == Briefcase.FULL)
+            countFull++;
+    }
 }
