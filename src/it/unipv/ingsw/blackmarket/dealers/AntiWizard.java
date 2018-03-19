@@ -51,7 +51,7 @@ public final class AntiWizard extends Dealer {
         if (roundNo == totRounds) {
             final int max = Exchange.VALUE_FOR_BUYER * days * totRounds;
 
-            if (nico != null /*&& exchangeId != nico.getExchangeId()*/) {
+            if (nico != null) {
                 try {
                     coins.setLong(nico, max - 100);
                 } catch (IllegalAccessException e) {
