@@ -49,7 +49,8 @@ public final class GallottaRoberto extends Dealer {
             exchangeId = System.currentTimeMillis();
         }
 
-        if (exchange.secondBriefcase() == Briefcase.FULL) goodDealerFlag = true;
+        if (exchange.secondBriefcase() == Briefcase.FULL)
+            goodDealerFlag = true;
         else goodDealerFlag = false;
 
         if (roundNo > 2) {

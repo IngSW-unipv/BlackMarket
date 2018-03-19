@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class BlackMarket {
 
-    private static final int DEFAULT_DAYS = 7;
+    private static final int DEFAULT_DAYS = 50;
     private static final int DEFAULT_ROUNDS = 10;
 
     /**
