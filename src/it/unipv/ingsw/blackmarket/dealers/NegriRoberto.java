@@ -8,7 +8,7 @@ public class NegriRoberto extends Dealer {
 
 
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-       if((roundNo<2)&&(roundNo%2==0)){
+       if((roundNo<2)&&(roundNo%2==1)){
            return Briefcase.FULL;
        }
        else {
