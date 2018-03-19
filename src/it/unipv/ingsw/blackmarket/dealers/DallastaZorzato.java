@@ -21,7 +21,7 @@ public final class DallastaZorzato extends Dealer {
         if (roundNo == 1)
             foe = -1;
 
-        // No alle mafie, sì alla logica!
+        // No magic or stuff, just logic
         switch (foe) {
             case 0:
             case 1:
