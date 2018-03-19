@@ -22,7 +22,7 @@ public class GAD_QUENTN extends Dealer{
 
         if(roundNo == 1) {
 
-            return Briefcase.FULL;
+            return Briefcase.EMPTY;
         }
 
     else {
@@ -33,7 +33,7 @@ public class GAD_QUENTN extends Dealer{
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        if(roundNo==2)
+        if(roundNo==1)
         case_ = exchange.secondBriefcase();
     }
 
