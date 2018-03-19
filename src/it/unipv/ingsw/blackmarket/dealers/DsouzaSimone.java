@@ -4,6 +4,9 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Exchange;
 import it.unipv.ingsw.blackmarket.Dealer;
 
+// VERSIONE 1
+
+
 public class DsouzaSimone extends Dealer{
     Briefcase case_;
 
