@@ -4,16 +4,16 @@ package it.unipv.ingsw.blackmarket;
 /**
  * An exchange of briefcases.
  */
-public class Exchange {
+public final class Exchange {
     /** Value obtained when buying a case of goods. */
     public static final int VALUE_FOR_BUYER = 14;
     /** Value lost when selling a case of goods. */
     public static final int VALUE_FOR_SELLER = 10;
 
     /// Case exchanged by the first dealer.
-    private Briefcase case1;
+    private final Briefcase case1;
     /// Case exchanged by the second dealer.
-    private Briefcase case2;
+    private final Briefcase case2;
 
     /**
      * Create a new exchange.

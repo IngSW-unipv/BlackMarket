@@ -4,46 +4,66 @@ package it.unipv.ingsw.blackmarket.dealers;
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
-import java.util.Random;
 
+import static it.unipv.ingsw.blackmarket.Briefcase.EMPTY;
 import static it.unipv.ingsw.blackmarket.Briefcase.FULL;
 
 public class AndreiniSimone extends Dealer{
-    private Briefcase case_;
-    private int nFull=0,nEmpty=0;
+    private Briefcase recivedCase,last;
+    private boolean honest =true;
+    private int forgive=0,count=0;
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        if(roundNo==1){
-            return Briefcase.EMPTY;
-        }
-        return scelta(roundNo);
+        return scelta(roundNo,totRounds);
     }
 
-    private Briefcase scelta(int roundNo) {
-        Random randomGenerator = new Random();
-
-        if (nFull>=nEmpty){
-            if (case_== FULL && getCoins()<150) {
-                return (randomGenerator.nextBoolean() ? Briefcase.EMPTY : FULL);
-            }
-            else {
-                return Briefcase.EMPTY;
-            }
+    private Briefcase scelta(int roundNo, int totRounds) {
+        if(roundNo==1){
+            honest =true; //#il primo turno do possibilità di essere onesti a tutti
+            forgive=0;
+            count=0;
+            return Briefcase.FULL;
         }
-        else {
+
+        if (roundNo==2){
             return Briefcase.EMPTY;
         }
+
+        if (roundNo<totRounds && honest){
+            if (count>3 || forgive>4){
+                return Briefcase.EMPTY;
+            }
+            else {
+                return Briefcase.FULL;
+            }
+        }
+
+        if (roundNo==totRounds){
+            return Briefcase.EMPTY;
+        }
+
+        else return Briefcase.EMPTY;
     }
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        case_ = exchange.secondBriefcase();
-        if (case_==FULL){
-            nFull++;
+        recivedCase = exchange.secondBriefcase();
+        last=exchange.firstBriefcase();
+        if (recivedCase == EMPTY) {
+            honest = false;
+            forgive = 0;
+            count=0;
         }
-        else {
-            nEmpty++;
+        if (recivedCase == FULL) {
+            forgive++;
+            if (forgive > 3) {
+                honest = true;
+            }
+        }
+        if (last== EMPTY && recivedCase==FULL){
+            count++;
         }
     }
+
 }

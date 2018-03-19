@@ -1,14 +1,17 @@
+// Gallotta Roberto, 435774
+
 package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-// import java.util.ArrayList;
+public final class GallottaRoberto extends Dealer {
 
-public class GallottaRoberto extends Dealer {
+    /*  è stato bello finché è durato. Almeno ora il programma è migliore.
 
     Briefcase case_;
+
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
@@ -16,44 +19,46 @@ public class GallottaRoberto extends Dealer {
     }
 
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        this.addCoins(10);
+    	if(roundNo < 5) {
+        	this.addCoins(1000000000); //è barare se il metodo permette di approfittarne? circa 2^30 per mandare in overflow la fine
+        }
     }
+    */
 
 
+    Briefcase case_;
+    Boolean goodDealerFlag = false;
+    private long exchangeId;
 
-    // C'era una logica dietro ma è inutile usarla ché tanto qua tutti ritornano la valigetta vuota.
-    /*Briefcase c1;
-    Briefcase c2;
-    ArrayList<Briefcase> cTmp = new ArrayList<>();
+    public GallottaRoberto() {
+        // Mutually assured destruction is never the answer.
+        AntiClaudio.joinTheGuild(this);
+    }
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        if (roundNo == 1) {
-            case_ = Briefcase.EMPTY;
+        if (roundNo == 1 | roundNo == 2) {
+            case_ = Briefcase.FULL;
         }
         return case_;
     }
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        c1 = exchange.firstBriefcase();
-        c2 = exchange.secondBriefcase();
-        cTmp.add(exchange.secondBriefcase());
-        boolean flag = false;
-
-        if (cTmp.size() == 2) {
-            flag = checkFirstTwoCases(cTmp.get(0), cTmp.get(1));
+        if (roundNo == 1) {
+            exchangeId = System.currentTimeMillis();
         }
 
-        if (flag) {
-            case_ = Briefcase.EMPTY;
-        } else case_ = Briefcase.EMPTY;
+        if (exchange.secondBriefcase() == Briefcase.FULL) goodDealerFlag = true;
+        else goodDealerFlag = false;
 
+        if (roundNo > 2) {
+            if(goodDealerFlag) case_ = Briefcase.FULL;
+            else case_ = Briefcase.EMPTY;
+        }
     }
 
-    public boolean checkFirstTwoCases(Briefcase a, Briefcase b) {
-        if (a == b) return true;
-        else return false;
-
-    }*/
+    public long getExchangeId() {
+        return exchangeId;
+    }
 }

@@ -4,8 +4,10 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-public class Curcio extends Dealer {
-
+/**
+ * A dealer who starts behaving honestly and then retaliates when gets cheated by his partner.
+ */
+public class TitForTat extends Dealer {
     private Briefcase last;
 
     @Override
@@ -18,11 +20,6 @@ public class Curcio extends Dealer {
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        if(roundNo<=5) {
-            last = exchange.secondBriefcase();
-        }
-        else {
-            last=Briefcase.EMPTY;
-        }
+        last = exchange.secondBriefcase();
     }
 }

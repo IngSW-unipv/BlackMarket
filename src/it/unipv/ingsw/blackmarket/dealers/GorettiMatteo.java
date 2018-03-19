@@ -7,13 +7,13 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GorettiMatteo extends Dealer{
 
     private Briefcase briefcase;
     private double trust;
-    private Random randomGenerator = new Random();
 
     public GorettiMatteo() {
         this.briefcase = Briefcase.EMPTY;
@@ -22,30 +22,29 @@ public class GorettiMatteo extends Dealer{
 
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-        //addCoins(10);
-        return Briefcase.EMPTY;
-        /*
-        if (roundNo == 1)
-            return (randomGenerator.nextBoolean() ? Briefcase.FULL : Briefcase.EMPTY);
-        else if(roundNo == totRounds)
-            return Briefcase.EMPTY;
-        else
-            return briefcase;
 
-       //return Briefcase.EMPTY;
-       */
+        if (roundNo == 1) {
+            trust = 0.5;
+            return Briefcase.FULL;
+        }else if(roundNo == totRounds){
+            return Briefcase.EMPTY;
+        }
+        else {
+            return briefcase;
+        }
     }
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        Briefcase bag1 = exchange.firstBriefcase();
-        Briefcase bag2 = exchange.secondBriefcase();
-        if(bag2 == Briefcase.EMPTY){
+        Briefcase bag = exchange.secondBriefcase();
+
+        if(bag == Briefcase.EMPTY){
             trust -= 0.17;
         }else{
             trust += 0.1;
         }
         if(trust>=0.5) briefcase = Briefcase.FULL;
         else briefcase = Briefcase.EMPTY;
+
     }
 }
