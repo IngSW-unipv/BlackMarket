@@ -75,6 +75,10 @@ public final class DallastaZorzato extends Dealer {
                 else if (foe == 1 && got.equals(f))  // honest or majority
                     foe = 4;
             default:
+                if (foe == 3 && got.equals(e))
+                    foe = 0;
+                else if (foe == 4 && got.equals(e))
+                    foe = 0;
                 break;
         }
     }
