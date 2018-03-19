@@ -15,7 +15,7 @@ public final class CaroloNicolas extends Dealer {
             bag = Briefcase.FULL;
             isReliable = true;
         }
-        if (roundNo > totRounds / 2){
+        if (roundNo > (totRounds / 2) + 1){
             return Briefcase.EMPTY;
         } else {
             return bag;
