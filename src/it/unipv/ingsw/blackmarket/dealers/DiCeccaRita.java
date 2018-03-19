@@ -39,7 +39,7 @@ public class DiCeccaRita extends Dealer {
             if ((result == Briefcase.EMPTY) && (exchange.secondBriefcase() == Briefcase.EMPTY)) {
                 case_ = Briefcase.EMPTY;
             }
-            if ((result == Briefcase.FULL) &&(exchange.secondBriefcase() == Briefcase.FULL)) {
+            if ((result == Briefcase.FULL) && (exchange.secondBriefcase() == Briefcase.FULL)) {
                 case_ = Briefcase.FULL;
             }
             if ((result == Briefcase.EMPTY) && (exchange.secondBriefcase() == Briefcase.FULL)) {
