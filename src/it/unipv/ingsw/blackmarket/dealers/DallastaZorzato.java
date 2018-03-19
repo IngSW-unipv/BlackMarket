@@ -67,7 +67,7 @@ public final class DallastaZorzato extends Dealer {
                 if (foe == -3 && got.equals(f))  // t4t, majority or honest
                     foe = 1;    // let's give him an empty one and see what happens
                 else if (foe == -3 && got.equals(e))  // didn't expect an empty one there
-                    foe = 0;   // not to be trusted
+                    foe = 0;    // not to be trusted
                 break;
             case 4:
                 if (foe == 1 && got.equals(e))  // tit4tat
