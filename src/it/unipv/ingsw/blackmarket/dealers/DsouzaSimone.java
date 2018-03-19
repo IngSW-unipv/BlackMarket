@@ -28,6 +28,12 @@ public class DsouzaSimone extends Dealer{
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
         if(roundNo==2)
             case_ = exchange.secondBriefcase();
+        if(roundNo>2)
+            case_= Briefcase.EMPTY;
+        if(roundNo==5)
+            case_ = exchange.secondBriefcase();
+        if(roundNo>5)
+            case_= Briefcase.EMPTY;
 
     }
 }
