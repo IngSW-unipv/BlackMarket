@@ -10,7 +10,6 @@ import it.unipv.ingsw.blackmarket.Exchange;
 /**
  * DEALEAR CHE COSEGNA LA STESSA COSA CHE È STAT RICEVUTA IL SECONDO ROUND
  * lA PRIMA CONSEGNA È ONESTA.
- * 437983
  */
 public class GAD_QUENTN extends Dealer{
 
