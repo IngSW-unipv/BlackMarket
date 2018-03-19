@@ -5,7 +5,6 @@ import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
 public class Curcio extends Dealer {
-
     private Briefcase last;
 
     @Override
