@@ -12,5 +12,4 @@ public class Curcio extends Dealer {
         } else
             return Briefcase.EMPTY;
     }
-
 }
