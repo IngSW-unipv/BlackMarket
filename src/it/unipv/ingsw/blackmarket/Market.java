@@ -8,8 +8,6 @@ package it.unipv.ingsw.blackmarket;
  * sotto "lib" e scegliere l'opzione opportuna).
  */
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-
-
 import it.unipv.ingsw.blackmarket.dealers.CoinFlipDealer;
 import it.unipv.ingsw.blackmarket.dealers.MajorityTrader;
 import it.unipv.ingsw.blackmarket.dealers.TitForTat;
