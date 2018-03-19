@@ -5,7 +5,7 @@ import it.unipv.ingsw.blackmarket.Briefcase;
 import it.unipv.ingsw.blackmarket.Dealer;
 import it.unipv.ingsw.blackmarket.Exchange;
 
-public class CaroloNicolas extends Dealer {
+public final class CaroloNicolas extends Dealer {
     private Briefcase bag = Briefcase.FULL;
     private boolean isReliable = true;
 
