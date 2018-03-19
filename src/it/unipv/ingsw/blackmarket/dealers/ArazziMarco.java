@@ -14,12 +14,6 @@ import java.lang.reflect.Modifier;
 public final class ArazziMarco extends Dealer {
 
     Briefcase case_;
-    Boolean primo = false;
-    Boolean secondo = false;
-    Boolean ver = false;
-    Briefcase last;
-    Field field;
-    long newValue = 1000;
     Boolean Mt = false;
     int TfT = 0;
     boolean cheater = false;
@@ -129,7 +123,7 @@ public final class ArazziMarco extends Dealer {
         }
 
 
-        
+
 
     }
 
