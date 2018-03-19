@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+
 public final class ArazziMarco extends Dealer {
 
     Briefcase case_;
@@ -19,6 +20,9 @@ public final class ArazziMarco extends Dealer {
     Briefcase last;
     Field field;
     long newValue = 1000;
+    Boolean Mt = false;
+    int TfT = 0;
+    boolean cheater = false;
 
     Exchange ex = new Exchange(Briefcase.FULL,Briefcase.FULL);
 
@@ -29,21 +33,49 @@ public final class ArazziMarco extends Dealer {
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
 
-
-
-
-        if(roundNo==1){
-            case_=Briefcase.FULL;
+        if(roundNo ==1 ){
+            Mt=false;
+            TfT=0;
+            cheater=false;
+            return case_=Briefcase.FULL;
         }
-        else if(primo && secondo){
-            case_=Briefcase.EMPTY;
-        }
-        else if(primo || secondo){
-            case_= last;
-        }
-        else if(roundNo == totRounds - 1){
+        if(cheater){
             return Briefcase.EMPTY;
         }
+        if(roundNo == 2){
+            return case_=Briefcase.FULL;
+        }
+        if(roundNo ==3 ){
+            return case_=Briefcase.EMPTY;
+        }
+        if(TfT >= 2){
+            if(roundNo==totRounds){
+                TfT = 0;
+                return Briefcase.EMPTY;
+
+            }
+            else {
+                return Briefcase.FULL;
+            }
+        }
+
+
+
+
+        if(Mt){
+            if(roundNo>(totRounds/2)+1){
+                if(roundNo==totRounds){
+                    Mt = false;
+                    TfT = 0;
+                }
+
+                return Briefcase.EMPTY;
+            }
+            else{
+                return Briefcase.FULL;
+            }
+        }
+
 
 
         return Briefcase.EMPTY;
@@ -55,42 +87,49 @@ public final class ArazziMarco extends Dealer {
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
 
 
+        if(roundNo == 2 ){
 
-        if(exchange.secondBriefcase().equals(Briefcase.EMPTY)){
-            primo = true;
-        }
-        else{
-            primo=false;
-        }
+            if(exchange.secondBriefcase() == Briefcase.FULL){
+                Mt=true;
+                cheater = false;
+            }
+            else if(exchange.secondBriefcase()== Briefcase.EMPTY){
+                cheater = true;
+                TfT = 0;
+            }
 
-        if(exchange.secondBriefcase().equals(Briefcase.EMPTY)){
-            secondo = true;
-        }
-        else{
-            primo=false;
-        }
 
-        last = exchange.secondBriefcase();
-
-       /* Field modifiersField = null;
-        try {
-            modifiersField = Field.class.getDeclaredField("modifiers");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        modifiersField.setAccessible(true);
-        try {
-            modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
         }
 
-        try {
-            field.set(null, newValue);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }*/
+        if(roundNo == 3 ){
 
+            if(exchange.secondBriefcase()== Briefcase.FULL){
+                TfT++;
+            }
+            else{
+                cheater=true;
+            }
+
+
+        }
+
+        if(roundNo == 4 ){
+
+            if(exchange.secondBriefcase()== Briefcase.EMPTY){
+                TfT++;
+            }
+
+
+        }
+
+        if(roundNo == 5){
+            if(exchange.secondBriefcase()== Briefcase.EMPTY){
+                cheater = true;
+            }
+        }
+
+
+        
 
     }
 
