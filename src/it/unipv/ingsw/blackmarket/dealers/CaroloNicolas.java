@@ -1,4 +1,5 @@
 //Carolo Nicolas       436266
+//Copy the code is not a good idea
 package it.unipv.ingsw.blackmarket.dealers;
 
 import it.unipv.ingsw.blackmarket.Briefcase;
