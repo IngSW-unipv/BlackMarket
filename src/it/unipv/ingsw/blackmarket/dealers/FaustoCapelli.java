@@ -1,8 +1,6 @@
 package it.unipv.ingsw.blackmarket.dealers;
 
-import it.unipv.ingsw.blackmarket.Briefcase;
-import it.unipv.ingsw.blackmarket.Dealer;
-import it.unipv.ingsw.blackmarket.Exchange;
+import it.unipv.ingsw.blackmarket.*;
 
 public class FaustoCapelli extends Dealer {
     private Briefcase last;
