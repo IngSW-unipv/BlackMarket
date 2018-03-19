@@ -9,17 +9,19 @@ import java.util.ArrayList;
 
 public class AnsaldiJacopo extends Dealer {
     //ANSALDI 437472
-    private ArrayList<Briefcase> previousCase;
-    public AnsaldiJacopo() {
-        previousCase = new ArrayList<>();
-    }
+    private Briefcase last;
     @Override
     public Briefcase exchangeBriefcase(int roundNo, int totRounds) {
-       return Briefcase.EMPTY;
+       if(roundNo == 0){
+           return Briefcase.FULL;
+       }
+       if(roundNo==totRounds) return Briefcase.EMPTY;
+       else return last;
+
     }
 
     @Override
     public void exchangeResult(Exchange exchange, int roundNo, int totRounds) {
-        previousCase.add(exchange.secondBriefcase());
+        last=exchange.secondBriefcase();
     }
 }

@@ -9,7 +9,6 @@ package it.unipv.ingsw.blackmarket;
  */
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
-
 import it.unipv.ingsw.blackmarket.dealers.CoinFlipDealer;
 import it.unipv.ingsw.blackmarket.dealers.MajorityTrader;
 import it.unipv.ingsw.blackmarket.dealers.TitForTat;
@@ -17,6 +16,7 @@ import it.unipv.ingsw.blackmarket.dealers.TitForTat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +39,7 @@ public final class Market {
      * Dealer classes are found by reflection and for each class derived from Dealer one instance is created and added
      * to the market.  The final list is guaranteed to have an even number of dealers.
      */
+
     public void populateMarket() {
         dealers.clear();
 
