@@ -1,8 +1,6 @@
 package it.unipv.ingsw.blackmarket;
 
 
-import it.unipv.ingsw.blackmarket.dealers.AnsaldiJacopo;
-
 /**
  * A dealer in the black market.
  */
@@ -28,7 +26,7 @@ public abstract class Dealer implements Comparable<Dealer> {
     /**
      * Add some money to the profit of the dealer.
      */
-    protected final void addCoins(long amount) {
+    final void addCoins(long amount) {
         try {
             coins = Math.addExact(coins, amount);
         } catch (ArithmeticException e) {
